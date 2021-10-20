@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout  🛎️
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Set up Python 🐍
         uses: actions/setup-python@v2
@@ -37,3 +37,5 @@ jobs:
           user: __token__        
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository_url: https://test.pypi.org/legacy/    
+
+
