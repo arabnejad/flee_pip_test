@@ -9,14 +9,17 @@ from setuptools import setup, find_packages
 import versioneer
 
 
-with open("README.md") as readme_file:
-    readme = readme_file.read()
-
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 
 pkg_local_dir = os.path.dirname(os.path.abspath(__file__))
+
+with open(
+        os.path.join(pkg_local_dir, "README.md"),
+        encoding='utf-8'
+) as readme_file:
+    long_description = readme_file.read()
 
 
 with pathlib.Path("requirements.txt").open() as requirements_txt:
@@ -49,7 +52,8 @@ setup(
     "across geographical locations.",
     install_requires=install_requires,
     license="BSD-3-Clause",
-    long_description=readme + "\n\n" + history,
+    long_description=long_description + "\n\n" + history,
+    long_description_content_type='text/markdown',
     include_package_data=True,
     keywords="flee",
     name="flee",
