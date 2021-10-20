@@ -35,10 +35,10 @@ setup(
     author_email="Derek.Groen@brunel.ac.uk",
     python_requires=">=3.6",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Developers",
+        # "Development Status :: 2 - Pre-Alpha",
+        # "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
-        "Natural Language :: English",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -48,7 +48,7 @@ setup(
     "purpose-built for simulating the movement of individuals "
     "across geographical locations.",
     install_requires=install_requires,
-    license="BSD License",
+    license="BSD-3-Clause",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
     keywords="flee",
