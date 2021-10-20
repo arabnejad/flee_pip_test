@@ -6,6 +6,8 @@ import pathlib
 import os
 import pkg_resources
 from setuptools import setup, find_packages
+import versioneer
+
 
 with open("README.md") as readme_file:
     readme = readme_file.read()
@@ -14,7 +16,8 @@ with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 
-pkg_local_dir = os.path.abspath(path.dirname(__file__))
+pkg_local_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 with pathlib.Path("requirements.txt").open() as requirements_txt:
     install_requires = [
@@ -24,6 +27,8 @@ with pathlib.Path("requirements.txt").open() as requirements_txt:
     ]
 
 test_requirements = ["pytest>=3", ]
+
+cmdclass = versioneer.get_cmdclass()
 
 setup(
     author="Derek Groen",
@@ -52,6 +57,8 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/arabnejad/flee",
-    version="0.1.0",
+    # version="0.1.0",
+    version=versioneer.get_version(),
+    cmdclass=cmdclass,
     zip_safe=False,
 )
