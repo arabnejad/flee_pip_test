@@ -37,7 +37,7 @@ setup(
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: BSD 3-clause license",
+        "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
@@ -48,7 +48,7 @@ setup(
     "purpose-built for simulating the movement of individuals "
     "across geographical locations.",
     install_requires=install_requires,
-    license="BSD 3-clause license",
+    license="BSD License",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
     keywords="flee",
