@@ -1,9 +1,6 @@
-from flee import flee
-from flee.datamanager import handle_refugee_data
-from flee.datamanager import DataTable
-import numpy as np
-import flee.postprocessing.analysis as a
 import sys
+
+from flee.datamanager import DataTable
 
 """
 calc_date_difference.py

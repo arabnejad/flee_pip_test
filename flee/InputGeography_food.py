@@ -1,7 +1,7 @@
 import csv
 import sys
-from flee import flee
-from flee import SimulationSettings
+# from flee import flee
+# from flee import SimulationSettings
 
 
 class InputGeography:
@@ -13,7 +13,10 @@ class InputGeography:
         self.locations = []
         self.links = []
 
-    def ReadLocationsFromCSV(self, csv_name, columns=["name", "region", "country", "gps_x", "gps_y", "location_type", "conflict_date", "pop/cap"]):
+    def ReadLocationsFromCSV(self, csv_name,
+                             columns=["name", "region", "country", "gps_x", "gps_y",
+                                      "location_type", "conflict_date", "pop/cap"]
+                             ):
         """
         Converts a CSV file to a locations information table
         """
@@ -26,10 +29,10 @@ class InputGeography:
         c["country"] = 0
         c["region"] = 0
 
-        for i in range(0, len(columns)):
-            c[columns[i]] = i
+        for i, name in enumerate(columns):
+            c[name] = i
 
-        with open(csv_name, newline='') as csvfile:
+        with open(csv_name, newline="", encoding="utf-8") as csvfile:
             values = csv.reader(csvfile)
 
             for row in values:
@@ -37,8 +40,18 @@ class InputGeography:
                     pass
                 else:
                     # print(row)
-                    self.locations.append([row[c["name"]], row[c["pop/cap"]], row[c["gps_x"]], row[c["gps_y"]], row[
-                                          c["location_type"]], row[c["conflict_date"]], row[c["region"]], row[c["country"]]])
+                    self.locations.append(
+                        [
+                            row[c["name"]],
+                            row[c["pop/cap"]],
+                            row[c["gps_x"]],
+                            row[c["gps_y"]],
+                            row[c["location_type"]],
+                            row[c["conflict_date"]],
+                            row[c["region"]],
+                            row[c["country"]],
+                        ]
+                    )
 
     def ReadLinksFromCSV(self, csv_name, name1_col=0, name2_col=1, dist_col=2):
         """
@@ -46,7 +59,7 @@ class InputGeography:
         """
         self.links = []
 
-        with open(csv_name, newline='') as csvfile:
+        with open(csv_name, newline="", encoding="utf-8") as csvfile:
             values = csv.reader(csvfile)
 
             for row in values:
@@ -64,7 +77,7 @@ class InputGeography:
         """
         self.closures = []
 
-        with open(csv_name, newline='') as csvfile:
+        with open(csv_name, newline="", encoding="utf-8") as csvfile:
             values = csv.reader(csvfile)
 
             for row in values:
@@ -89,20 +102,20 @@ class InputGeography:
             if len(l[7]) < 1:
                 l[7] = "unknown"
 
-            #print(l, file=sys.stderr)
-            movechance = l[4]
-            if "conflict" in l[4].lower() and int(l[5]) > 0:
-                movechance = "town"
+            # print(l, file=sys.stderr)
+            location_type = l[4]
+            if "conflict" in location_type.lower() and int(l[5]) > 0:
+                location_type = "town"
 
             if "camp" in l[4].lower():
-                lm[l[0]] = e.addLocation(l[0], movechance=movechance, capacity=int(
+                lm[l[0]] = e.addLocation(l[0], location_type=location_type, capacity=int(
                     l[1]), x=l[2], y=l[3], country=l[7], region=l[6])
             else:
-                lm[l[0]] = e.addLocation(l[0], movechance=movechance, pop=int(
+                lm[l[0]] = e.addLocation(l[0], location_type=location_type, pop=int(
                     l[1]), x=l[2], y=l[3], country=l[7], region=l[6])
 
         for l in self.links:
-            if (len(l) > 3):
+            if len(l) > 3:
                 if int(l[3]) == 1:
                     e.linkUp(l[0], l[1], int(l[2]), True)
                 if int(l[3]) == 2:
@@ -119,8 +132,11 @@ class InputGeography:
         return e, lm
 
     def AddNewConflictZones(self, e, time):
+        """
+        Summary
+        """
         for l in self.locations:
             if "conflict" in l[4].lower() and int(l[5]) == time:
                 print("Time = %s. Adding a new conflict zone [%s]" % (
                     time, l[0]), file=sys.stderr)
-                e.add_conflict_zone(l[0])
+                e.add_conflict_zone(name=l[0])

@@ -1,5 +1,7 @@
-.PHONY: clean clean-test clean-pyc clean-build docs help
+.PHONY: clean clean-test clean-pyc clean-build servedocs help
 .DEFAULT_GOAL := help
+
+.INTERMEDIATE:
 
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -23,10 +25,14 @@ export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
+
+
+
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -35,55 +41,52 @@ clean-build: ## remove build artifacts
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
+
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
-clean-test: ## remove test and coverage artifacts
-	rm -fr .tox/
-	rm -f .coverage
-	rm -fr htmlcov/
+
+clean-test: ## remove pytest artifacts
 	rm -fr .pytest_cache
 
+
 lint/flake8: ## check style with flake8
-	flake8 flee tests
+	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi
+	@if [ -d ".linter_reports/flake-report" ]; then rm -rf .linter_reports/flake-report; fi
+	$(info ************  RUNNING flake8 ************)
+	flake8 --config=.linter_cfg/.flake8 flee || exit 0
+
+
+lint/isort: ## check import module style with isort
+	$(info ************  RUNNING isort ************)		
+	isort --settings-path=.linter_cfg/.isort.cfg --profile hug --check --diff --filter-files flee/ || exit 0
+
+
+lint/pylint: ## check code-style with pylint
+	$(info ************  RUNNING pylint ************)	
+	pylint --rcfile=.linter_cfg/.pylintrc --output-format=json:somefile,colorized flee/ || exit 0
+
+
 lint/black: ## check style with black
-	black --check flee tests
+	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi
+	$(info ************  RUNNING black ************)	
+	black  --config=.linter_cfg/.black flee/ > .linter_reports/black_report.ansi  || exit 0
 
-lint: lint/flake8 lint/black ## check style
 
-test: ## run tests quickly with the default Python
-	pytest
+lint: lint/flake8 lint/black lint/isort lint/black ## check all lint styles
 
-test-all: ## run tests on every Python version with tox
-	tox
 
-coverage: ## check code coverage quickly with the default Python
-	coverage run --source flee -m pytest
-	coverage report -m
-	coverage html
-	$(BROWSER) htmlcov/index.html
+test: ## run pytests quickly with the default Python
+	$(info ************  RUNNING pytest ************)		
+	python3 -m pytest -c=.linter_cfg/.pytest.ini -x
 
-docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/flee.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ flee
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(BROWSER) docs/_build/html/index.html
 
-servedocs: docs ## compile the docs watching for changes
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+servedocs: ## generate MkDocs HTML documentation, including API docs, watching for changes
+	mkdocs serve
 
-release: dist ## package and upload a release
-	twine upload dist/*
-
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
-	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install

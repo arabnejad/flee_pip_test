@@ -1,11 +1,25 @@
 import csv
+import os
 import sys
+from functools import wraps
+
 from flee import flee
-from flee import SimulationSettings
-from flee import InputGeography
+from flee.InputGeography import InputGeography as based_InputGeography_class
+from flee.SimulationSettings import SimulationSettings
+
+if os.getenv("FLEE_TYPE_CHECK") is not None and os.environ["FLEE_TYPE_CHECK"].lower() == "true":
+    from beartype import beartype as check_args_type
+else:
+
+    def check_args_type(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
 
 
-class InputGeography(InputGeography.InputGeography):
+class InputGeography(based_InputGeography_class):
     """
     Class which reads in Geographic information.
     """
@@ -13,13 +27,30 @@ class InputGeography(InputGeography.InputGeography):
     def __init__(self):
         super().__init__()
 
-    def ReadLinksFromCSV(self, csv_name, name1_col=0, name2_col=1, dist_col=2, forced_redirection=3, link_type_col=4):
+    @check_args_type
+    def ReadLinksFromCSV(
+        self,
+        csv_name: str,
+        name1_col: int = 0,
+        name2_col: int = 1,
+        dist_col: int = 2,
+        forced_redirection: int = 3,
+        link_type_col: int = 4,
+    ) -> None:
         """
         Converts a CSV file to a locations information table
+
+        Args:
+            csv_name (str): Description
+            name1_col (int, optional): Description
+            name2_col (int, optional): Description
+            dist_col (int, optional): Description
+            forced_redirection (int, optional): Description
+            link_type_col (int, optional): Description
         """
         self.links = []
 
-        with open(csv_name, newline='') as csvfile:
+        with open(csv_name, newline="", encoding="utf-8") as csvfile:
             values = csv.reader(csvfile)
 
             for row in values:
@@ -27,8 +58,15 @@ class InputGeography(InputGeography.InputGeography):
                     pass
                 else:
                     # print(row)
-                    self.links.append([row[name1_col], row[name2_col], row[dist_col], row[
-                                      forced_redirection], row[link_type_col]])
+                    self.links.append(
+                        [
+                            row[name1_col],
+                            row[name2_col],
+                            row[dist_col],
+                            row[forced_redirection],
+                            row[link_type_col],
+                        ]
+                    )
 
         if isinstance(row[link_type_col], str):
             if "drive" in row[link_type_col].lower():
@@ -38,55 +76,114 @@ class InputGeography(InputGeography.InputGeography):
             elif "crossing" in row[link_type_col].lower():
                 flee.SimulationSettings.MaxMoveSpeed = flee.SimulationSettings.MaxCrossingSpeed
             else:
-                print("Error in identifying link_type() object: cannot parse the type of link ",
-                      link_type_col, " for location object with name ", name1_col, ".")
+                print(
+                    "Error in identifying link_type() object: cannot parse the type of link {}"
+                    " {} for location object with name.".format(link_type_col, name1_col)
+                )
+                sys.exit()
 
+    @check_args_type
     def StoreInputGeographyInEcosystem(self, e):
         """
         Store the geographic information in this class in a FLEE simulation,
         overwriting existing entries.
+
+        Args:
+            e (Ecosystem): Description
+
+        Returns:
+            Tuple[Ecosystem, Dict]: Description
         """
         lm = {}
         num_conflict_zones = 0
 
         for l in self.locations:
+            name = l[0]
+
             # if population field is empty, just set it to 0.
             if len(l[1]) < 1:
-                l[1] = "0"
+                population = 0
+            else:
+                population = int(l[1]) // SimulationSettings.PopulationScaledownFactor
+
+            x = float(l[2]) if len(l[2]) > 0 else 0.0
+            y = float(l[3]) if len(l[3]) > 0 else 0.0
+
             # if population field is empty, just set it to 0.
             if len(l[7]) < 1:
-                l[7] = "unknown"
+                country = "unknown"
+            else:
+                country = l[7]
 
-            #print(l, file=sys.stderr)
-            movechance = l[4]
-            if "conflict" in l[4].lower():
+            # print(l, file=sys.stderr)
+            location_type = l[4]
+            if "conflict" in location_type.lower():
                 num_conflict_zones += 1
                 if int(l[5]) > 0:
-                    movechance = "town"
+                    location_type = "town"
 
             if "camp" in l[4].lower():
-                lm[l[0]] = e.addLocation(l[0], movechance=movechance, capacity=int(
-                    l[1]), x=l[2], y=l[3], country=l[7])
+                lm[name] = e.addLocation(
+                    name=name,
+                    location_type=location_type,
+                    capacity=population,
+                    x=x,
+                    y=y,
+                    country=country,
+                )
             else:
-                lm[l[0]] = e.addLocation(l[0], movechance=movechance, pop=int(
-                    l[1]), x=l[2], y=l[3], country=l[7])
+                lm[name] = e.addLocation(
+                    name=name,
+                    location_type=location_type,
+                    pop=population,
+                    x=x,
+                    y=y,
+                    country=country,
+                )
 
         for l in self.links:
-            if (len(l) > 4):
+            if len(l) > 4:
                 if int(l[3]) == 1:
-                    e.linkUp(l[0], l[1], int(l[2]), True, str(l[4]))
+                    e.linkUp(
+                        endpoint1=l[0],
+                        endpoint2=l[1],
+                        distance=float(l[2]),
+                        forced_redirection=True,
+                        link_type=str(l[4]),
+                    )
                 if int(l[3]) == 2:
-                    e.linkUp(l[1], l[0], int(l[2]), True, str(l[4]))
+                    e.linkUp(
+                        endpoint1=l[1],
+                        endpoint2=l[0],
+                        distance=float(l[2]),
+                        forced_redirection=True,
+                        link_type=str(l[4]),
+                    )
                 else:
-                    e.linkUp(l[0], l[1], int(l[2]), False, str(l[4]))
+                    e.linkUp(
+                        endpoint1=l[0],
+                        endpoint2=l[1],
+                        distance=float(l[2]),
+                        forced_redirection=False,
+                        link_type=str(l[4]),
+                    )
             else:
-                e.linkUp(l[0], l[1], int(l[2]), False, str(l[4]))
+                e.linkUp(
+                    endpoint1=l[0],
+                    endpoint2=l[1],
+                    distance=float(l[2]),
+                    forced_redirection=False,
+                    link_type=str(l[4]),
+                )
 
         e.closures = []
         for l in self.closures:
             e.closures.append([l[0], l[1], l[2], int(l[3]), int(l[4])])
 
         if num_conflict_zones < 1:
-            print("Warning: location graph has 0 conflict zones (ignore if conflicts.csv is used).", file=sys.stderr)
+            print(
+                "Warning: location graph has 0 conflict zones (ignore if conflicts.csv is used).",
+                file=sys.stderr,
+            )
 
         return e, lm
