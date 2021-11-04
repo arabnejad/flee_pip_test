@@ -92,16 +92,17 @@ plugins:
       strict: true  
   - macros
   - mkdocstrings:
+      default_handler: python    
       handlers:
           python:
             setup_commands:
-              - import sys
-            #   - sys.path.append("flee")
-            #   - sys.path.insert(0, ".")            
-              - sys.path.append('../')
+            #   - import sys
+            # #   - sys.path.append("flee")
+            # #   - sys.path.insert(0, ".")            
+            #   - sys.path.append('../')
             rendering:
               show_root_toc_entry: false
-              show_root_heading: True
+              show_root_heading: false
               show_root_full_path: true
               show_object_full_path: false
               show_source: true
