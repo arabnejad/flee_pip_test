@@ -12,8 +12,10 @@ python:
   install:
     - requirements: docs/mkdocs-requirements.txt
     - requirements: requirements.txt
+    - method: setuptools
+      path: flee
   system_packages: true
-  setup_py_install: true
+
 
 # Build documentation with MkDocs
 mkdocs:
