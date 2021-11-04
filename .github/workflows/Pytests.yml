@@ -60,10 +60,15 @@ jobs:
           python3 --version
           python --version
 
+      # - name: Install MPI 📥
+      #   run: |
+      #     ${{ matrix.install-mpi }}
+      #     mpirun --version
+
       - name: Install MPI 📥
-        run: |
-          ${{ matrix.install-mpi }}
-          mpirun --version
+        uses: mpi4py/setup-mpi@v1
+        with:
+          mpi: ${{ matrix.mpi }}
 
 
       - name: Install Python Dependencies 📥
