@@ -13,6 +13,7 @@ python:
     - requirements: docs/mkdocs-requirements.txt
     - requirements: requirements.txt
   system_packages: true
+  setup_py_install: true
 
 # Build documentation with MkDocs
 mkdocs:
