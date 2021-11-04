@@ -12,8 +12,8 @@ python:
   install:
     - requirements: docs/mkdocs-requirements.txt
     - requirements: requirements.txt
-    - method: setuptools
-      path: .
+    # - method: setuptools
+    #   path: .
   system_packages: true
 
 
