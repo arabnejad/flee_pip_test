@@ -98,7 +98,7 @@ def run_par():
     def _run_par(config, simulation_period, cores):
         config_path = os.path.join(base, config)
         current_dir = os.getcwd()
-        cmd = ["mpirun",
+        cmd = ["mpiexec",
                "-np",
                cores,
                "python3",
