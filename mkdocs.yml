@@ -8,8 +8,8 @@ site_description: Simulation toolkit for the movement of individuals
 ##################
 #   Repository   #
 ##################
-repo_name: arabnejad/flee
-repo_url: https://github.com/arabnejad/flee
+repo_name: djgroen/flee
+repo_url: https://github.com/djgroen/flee
 
 site_author: Hamid Arabnejad
 docs_dir: docs/
@@ -25,7 +25,7 @@ extra:
     # - icon: fontawesome/solid/home
     #   link: https://up42.com
     - icon: fontawesome/brands/github-alt
-      link: https://github.com/arabnejad/flee
+      link: https://github.com/djgroen/flee
     # - icon: fontawesome/brands/docker
     #   link: https://hub.docker.com/u/up42
     - icon: fontawesome/solid/envelope
@@ -54,15 +54,27 @@ theme:
     text: Roboto
     code: Roboto Mono
   palette:
-    primary: black    
+    # primary: blue grey
+    # accent: red
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+      # primary: teal
+      # accent: red
+        
+    - scheme: slate 
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode     
+      # primary: teal
+      # accent: red
+
   features:
     - search.suggest
     - search.highlight    
     - navigation.tabs
     - navigation.expand  
-    # - instant
-    # - toc.integrate
-    # - navigation.sections
   favicon: images/logo/logo.png # browser tab icon
   logo: images/empty.png
   icon:
@@ -82,10 +94,6 @@ plugins:
   - mkdocstrings:
       handlers:
           python:
-            # setup_commands:
-            #   - import sys
-            #   - sys.path.append("flee")
-            #   - sys.path.insert(0, ".")
             rendering:
               show_root_toc_entry: false
               show_root_heading: True
@@ -110,18 +118,6 @@ plugins:
         securityLevel: 'loose'
         theme: 'forest'
 
-  # https://timvink.github.io/mkdocs-print-site-plugin/customization/pdf_button.html
-  # - print-site:
-  #     add_full_urls: false
-  #     add_table_of_contents: true
-  #     toc_title: "Table of Contents"
-  #     toc_depth: 2
-  #     add_full_urls: false
-  #     enumerate_headings: true
-  #     enumerate_figures: true
-  #     add_cover_page: true
-  #     add_to_navigation: false
-
 
 
 #################
@@ -129,10 +125,6 @@ plugins:
 #################
 extra_css:
   - static/css/custom.css
-  
-  # - static/css/colors.css
-  # - static/css/terminal.css
-  # - static/css/extra.css
 
 ################
 #   Extra JS   #
@@ -144,7 +136,6 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/mermaid/dist/mermaid.min.js
   - static/js/extra.js
-  # - static/js/terminal.js
 
 ##################
 #   Extensions   #
@@ -182,10 +173,6 @@ markdown_extensions:
       nbsp: true      
   - pymdownx.inlinehilite # inline code highlights
   - pymdownx.keys # show keystroke symbols
-  # - pymdownx.magiclink:
-  #     repo_url_shorthand: true
-  #     user: arabnejad
-  #     repo: pyDAGSim
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.snippets: # insert content from other files
@@ -194,19 +181,13 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          # format: !!python/name:pymdownx.superfences.fence_code_format
-          # format: !!python/name:pymdownx.superfences.fence_div_format
           format: !!python/name:mermaid2.fence_mermaid
-
   - pymdownx.tabbed # content tabs
   - pymdownx.tasklist:
       custom_checkbox: true
       clickable_checkbox: true      
   - pymdownx.tilde
   - pymdownx.tabbed
-  # - mkdocs-click
-  # - codehilite:
-  #     guess_lang: false
   - codehilite:
       guess_lang: False
       use_pygments: True
@@ -256,4 +237,6 @@ nav:
             - InputGeography: code_reference/multiscale/pmicro_flee/inputGeography.md
 
 
+    - Contributing: contributing.md
+    - Credits : credits.md
     - Publications: papers/papers.md

@@ -78,3 +78,35 @@ div.doc-contents:not(.first) {
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .il { color: #008000 } /* Literal.Number.Integer.Long */
+
+
+:root {
+
+    /* Primary color shades */
+    --md-primary-fg-color: #003D4C;
+    --md-primary-fg-color--light: rgb(213,0,50);
+    --md-primary-fg-color--dark: #003D4C;
+    --md-primary-bg-color: hsla(0, 0%, 100%, 1);
+    --md-primary-bg-color--light: hsla(0, 0%, 100%, 1);
+    --md-text-link-color: hsla(231, 48%, 48%, 1);
+
+    /* Accent color shades */
+    --md-accent-fg-color: rgb(213,0,50);
+    --md-accent-fg-color--transparent: hsla(189, 100%, 37%, 0.1);
+    --md-accent-bg-color: hsla(0, 0%, 100%, 1);
+    --md-accent-bg-color--light: hsla(0, 0%, 100%, 1);
+  }
+
+:root > * {
+
+  /* Code block color shades */
+  --md-code-bg-color: hsla(0, 0%, 96%, 1);
+  --md-code-fg-color: hsla(200, 18%, 26%, 1);
+
+  /* Footer */
+  --md-footer-bg-color: #003D4C;
+  --md-footer-bg-color--dark: #003D4C;
+  --md-footer-fg-color: hsla(0, 0%, 100%, 1);
+  --md-footer-fg-color--light: hsla(0, 0%, 100%, 1);
+  --md-footer-fg-color--lighter: hsla(0, 0%, 100%, 1);
+}
