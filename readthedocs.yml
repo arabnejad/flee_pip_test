@@ -13,7 +13,7 @@ python:
     - requirements: docs/mkdocs-requirements.txt
     - requirements: requirements.txt
     - method: setuptools
-      path: flee
+      path: .
   system_packages: true
 
 
