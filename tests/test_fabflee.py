@@ -99,7 +99,7 @@ def run_par():
         config_path = os.path.join(base, config)
         current_dir = os.getcwd()
         cmd = ["mpirun",
-               "-n",
+               "-np",
                cores,
                "python3",
                "run_par.py",
