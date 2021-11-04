@@ -111,15 +111,15 @@ def run_par():
                ]
 
         ret = "OK"
-        output = subprocess.check_output(
-            cmd,
-            # shell=True,
-            # capture_output=True,
-            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-            text=True,
-            cwd=config_path
-            # stderr=subprocess.STDOUT
-        )
+        # output = subprocess.check_output(
+        #     cmd,
+        #     # shell=True,
+        #     # capture_output=True,
+        #     stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+        #     text=True,
+        #     cwd=config_path
+        #     # stderr=subprocess.STDOUT
+        # )
 
         os.chdir(config_path)
 
