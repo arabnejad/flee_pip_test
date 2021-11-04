@@ -6,3 +6,4 @@ mpi4py
 numpy
 beartype
 seaborn
+libmuscle
