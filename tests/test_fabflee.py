@@ -133,7 +133,7 @@ def run_par():
         except subprocess.CalledProcessError as e:
             # ret = "Command '{}' return non-zero exit status: "
             ret = "{} -- {} -- {}".format(
-                e.returncode, e.output, e.stdout.decode()
+                e.returncode, e.output, e.stdout
             )
 
         os.chdir(current_dir)
