@@ -4,3 +4,4 @@ pandas
 pytest
 mpi4py
 numpy
+beartype
