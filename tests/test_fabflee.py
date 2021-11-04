@@ -107,9 +107,10 @@ def run_par():
                "source_data",
                simulation_period,
                "simsetting.csv",
-               # "> out.csv"
+               "> out.csv"
                ]
 
+        print("cmd = {}".format(cmd), file=sys.stderr)
         ret = "OK"
         # output = subprocess.check_output(
         #     cmd,
@@ -122,12 +123,12 @@ def run_par():
         # )
 
         os.chdir(config_path)
-
         try:
             output = subprocess.check_output(
                 cmd,
                 # shell=True,
-                # stderr=subprocess.STDOUT,
+                stderr=subprocess.STDOUT,
+                # stdout=sys.stdout,
                 text=True,
             )
         except subprocess.CalledProcessError as e:
@@ -135,10 +136,13 @@ def run_par():
             # ret = "{} -- {} -- {}".format(
             #     e.returncode, e.output, e.stdout
             # )
-            ret = "Command '{}' return non-zero exit status: e.returncode = {}\n".format(
-                " ".join(cmd), e.returncode
+
+            ret = "Command '{}' return non-zero exit status: e.returncode = {} ".format(
+                cmd, e.returncode
             )
-            ret += "e.output=\n{}\ne.stdout=\n{}".format(e.output, e.stdout)
+            ret += "e.output= {} e.stdout= {}".format(e.output, e.stdout)
+
+            print("ret = {}".format(ret), file=sys.stderr)
 
         os.chdir(current_dir)
         return ret
