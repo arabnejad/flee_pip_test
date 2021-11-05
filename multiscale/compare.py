@@ -86,7 +86,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
     if "refugee_debt" in refugee_data1.columns:
 
         y_data = refugee_data1.loc[:, ["total refugees (simulation)"]]
-        total_refugees1, = plt.plot(
+        (total_refugees1,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -94,7 +94,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data1.loc[:, ["refugees in camps (simulation)"]]
-        refugees_in_camps1, = plt.plot(
+        (refugees_in_camps1,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -103,7 +103,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data2.loc[:, ["total refugees (simulation)"]]
-        total_refugees2, = plt.plot(
+        (total_refugees2,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -111,7 +111,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data2.loc[:, ["refugees in camps (simulation)"]]
-        refugees_in_camps2, = plt.plot(
+        (refugees_in_camps2,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -120,7 +120,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data1.loc[:, ["raw UNHCR refugee count"]]
-        raw_refugee_count, = plt.plot(
+        (raw_refugee_count,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -128,7 +128,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data1.loc[:, ["refugee_debt"]]
-        refugee_debt_simulation, = plt.plot(
+        (refugee_debt_simulation,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -138,7 +138,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         if uncoupled_model == "whole":
 
             y_data = refugee_data3.loc[:, ["total refugees (simulation)"]]
-            total_refugees3, = plt.plot(
+            (total_refugees3,) = plt.plot(
                 np.arange(len(y_data)),
                 y_data,
                 linewidth=5,
@@ -147,7 +147,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
             )
 
             y_data = refugee_data3.loc[:, ["refugees in camps (simulation)"]]
-            refugees_in_camps3, = plt.plot(
+            (refugees_in_camps3,) = plt.plot(
                 np.arange(len(y_data)),
                 y_data,
                 linewidth=5,
@@ -175,7 +175,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
 
     else:
         y_data = refugee_data1.loc[:, ["total refugees (simulation)"]]
-        total_refugees1, = plt.plot(
+        (total_refugees1,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -183,7 +183,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data1.loc[:, ["refugees in camps (simulation)"]]
-        refugees_in_camps1, = plt.plot(
+        (refugees_in_camps1,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -192,7 +192,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data2.loc[:, ["total refugees (simulation)"]]
-        total_refugees2, = plt.plot(
+        (total_refugees2,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -200,7 +200,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data2.loc[:, ["refugees in camps (simulation)"]]
-        refugees_in_camps2, = plt.plot(
+        (refugees_in_camps2,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -209,7 +209,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         )
 
         y_data = refugee_data1.loc[:, ["raw UNHCR refugee count"]]
-        raw_refugee_count, = plt.plot(
+        (raw_refugee_count,) = plt.plot(
             np.arange(len(y_data)),
             y_data,
             linewidth=5,
@@ -219,7 +219,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         if uncoupled_model == "whole":
 
             y_data = refugee_data3.loc[:, ["total refugees (simulation)"]]
-            total_refugees3, = plt.plot(
+            (total_refugees3,) = plt.plot(
                 np.arange(len(y_data)),
                 y_data,
                 linewidth=5,
@@ -228,7 +228,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
             )
 
             y_data = refugee_data3.loc[:, ["refugees in camps (simulation)"]]
-            refugees_in_camps3, = plt.plot(
+            (refugees_in_camps3,) = plt.plot(
                 np.arange(len(y_data)),
                 y_data,
                 linewidth=5,
@@ -334,14 +334,14 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
               ", len: ", len(diffdata3)
               )
 
-    labeldiff_rescaled1, = plt.plot(
+    (labeldiff_rescaled1,) = plt.plot(
         np.arange(len(diffdata1_rescaled)),
         diffdata1_rescaled,
         linewidth=5,
         label="Error {} Coupling".format(first_sim)
     )
 
-    labeldiff_rescaled2, = plt.plot(
+    (labeldiff_rescaled2,) = plt.plot(
         np.arange(len(diffdata2_rescaled)),
         diffdata2_rescaled,
         linewidth=5,
@@ -349,7 +349,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
     )
 
     if uncoupled_model == "whole":
-        labeldiff_rescaled3, = plt.plot(
+        (labeldiff_rescaled3,) = plt.plot(
             np.arange(len(diffdata3_rescaled)),
             diffdata3_rescaled,
             linewidth=5,
@@ -376,13 +376,13 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
 
     # ERROR COMPARISON
 
-    labeldiff1, = plt.plot(
+    (labeldiff1,) = plt.plot(
         np.arange(len(diffdata1)),
         diffdata1,
         linewidth=5,
         label="error- {} Coupling (not rescaled)".format(first_sim)
     )
-    labeldiff2, = plt.plot(
+    (labeldiff2,) = plt.plot(
         np.arange(len(diffdata2)),
         diffdata2,
         linewidth=5,
@@ -390,7 +390,7 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
     )
 
     if uncoupled_model == "whole":
-        labeldiff3, = plt.plot(
+        (labeldiff3,) = plt.plot(
             np.arange(len(diffdata3)),
             diffdata3,
             linewidth=5,
@@ -457,24 +457,24 @@ def compare(input_dir_1, input_dir_2, first_sim, second_sim,
         plt.ylabel("Number of refugees")
         plt.title("{} Simulation".format(name1[0]))
 
-        label1, = plt.plot(
+        (label1,) = plt.plot(
             refugee_data1.index, y1,
             "g", linewidth=5,
             label="{} Coupling".format(first_sim)
         )
-        label2, = plt.plot(
+        (label2,) = plt.plot(
             refugee_data1.index, y2,
             "b", linewidth=5,
             label="UNHCR data"
         )
-        label3, = plt.plot(
+        (label3,) = plt.plot(
             refugee_data2.index, y3,
             "r", linewidth=5,
             label="{} Coupling".format(second_sim)
         )
 
         if uncoupled_model == "whole":
-            label4, = plt.plot(
+            (label4,) = plt.plot(
                 refugee_data3.index, y4,
                 "y", linewidth=5,
                 label="{} Simulation".format(uncoupled_model)

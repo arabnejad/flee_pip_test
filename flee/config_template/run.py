@@ -66,10 +66,12 @@ if __name__ == "__main__":
 
     camp_locations = e.get_camp_names()
 
-    for l in camp_locations:
+    for camp_name in camp_locations:
         if insert_day0_refugees_in_camps:
-            AddInitialRefugees(e, d, lm[l])
-        output_header_string += "%s sim,%s data,%s error," % (lm[l].name, lm[l].name, lm[l].name)
+            AddInitialRefugees(e, d, lm[camp_name])
+        output_header_string += "%s sim,%s data,%s error," % (
+            lm[camp_name].name, lm[camp_name].name, lm[camp_name].name
+        )
 
     output_header_string += (
         "Total error,refugees in camps (UNHCR),total refugees (simulation),"

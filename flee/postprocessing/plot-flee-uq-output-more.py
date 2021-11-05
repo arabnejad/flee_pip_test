@@ -232,7 +232,7 @@ def plotme(
             )
 
         else:
-            labelsim, _ = plt.plot(
+            (labelsim,) = plt.plot(
                 days, y1, linewidth=line_width, label="%s simulation" % (name.title())
             )
             ymin = y1 - y1err
@@ -252,7 +252,7 @@ def plotme(
                 label="%s simulation" % (name.title()),
             )
         else:
-            labelsim, _ = plt.plot(
+            (labelsim,) = plt.plot(
                 days[:-offset],
                 y1[offset:],
                 linewidth=line_width,
@@ -277,7 +277,7 @@ def plotme(
                 label="%s UNHCR data" % (name.title()),
             )
         else:
-            labeldata, _ = plt.plot(
+            (labeldata,) = plt.plot(
                 days, y2, linewidth=line_width, label="%s UNHCR data" % (name.title())
             )
             ymin = y2 - y2err
@@ -322,7 +322,7 @@ def plotme(
             label="%s simulation" % (name.title()),
         )
     else:
-        labelsim, _ = plt.plot(
+        (labelsim,) = plt.plot(
             days, y1_rescaled, linewidth=line_width, label="%s simulation" % (name.title())
         )
         ymin = y1_rescaled - y1_rescalederr
@@ -365,10 +365,10 @@ def plotme(
         for i in range(0, len(n6)):
             n6[i] = untot[i] * (y2[naieve_training_day] / untot[naieve_training_day])
 
-        labelnaieve, _ = plt.plot(
+        (labelnaieve,) = plt.plot(
             days, n1, linewidth=line_width, label="%s naieve model" % (name.title())
         )
-        labelnaieve, _ = plt.plot(
+        (labelnaieve,) = plt.plot(
             days, n2, linewidth=line_width, label="%s naieve early" % (name.title())
         )
 
@@ -388,7 +388,7 @@ def plotme(
                 label="%s UNHCR data" % (name.title()),
             )
         else:
-            labeldata, _ = plt.plot(
+            (labeldata,) = plt.plot(
                 days, y2, linewidth=line_width, label="%s UNHCR data" % (name.title())
             )
             ymin = y2 - y2err
@@ -716,7 +716,7 @@ if __name__ == "__main__":
 
     # labeldiff, = plt.plot(np.arange(len(diffdata)), diffdata, linewidth=5,
     # label="error (not rescaled)")
-    labeldiff2, _ = plt.plot(
+    (labeldiff2,) = plt.plot(
         np.arange(len(diffdata_rescaled)), diffdata_rescaled, linewidth=5, label="error"
     )
     # labeldiff2, = plt.plot(np.arange(len(diffdata)), ref_mismatch_error,
@@ -727,7 +727,7 @@ if __name__ == "__main__":
     set_margins()
     plt.savefig("%s/error_V2.png" % out_dir)
 
-    labeldiff, _ = plt.plot(
+    (labeldiff,) = plt.plot(
         np.arange(len(diffdata)), diffdata, linewidth=5, label="error (not rescaled)"
     )
 
@@ -769,7 +769,7 @@ if __name__ == "__main__":
               ", rescaled: ", np.mean(diffdata_rescaled), ", len: ", len(diffdata))
         """
 
-        labeldiff2, _ = ax1.plot(
+        (labeldiff2,) = ax1.plot(
             np.arange(len(diffdata_rescaled)),
             diffdata_rescaled,
             linewidth=2,
@@ -777,7 +777,7 @@ if __name__ == "__main__":
         )
         set_margins()
 
-        labeldiff, _ = ax2.plot(
+        (labeldiff,) = ax2.plot(
             np.arange(len(diffdata)),
             diffdata,
             linewidth=2,
@@ -827,12 +827,12 @@ if __name__ == "__main__":
     # plt.gca().set_ylim([0, ymax])
 
     handles_set = []
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number), y_error, linewidth=3, label="Average Error (not rescaled)"
     )
     handles_set.append(labelsim)
 
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number),
         y_error_max,
         linewidth=1,
@@ -842,7 +842,7 @@ if __name__ == "__main__":
     )
     handles_set.append(labelsim)
 
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number),
         y_error_min,
         linewidth=1,
@@ -870,12 +870,12 @@ if __name__ == "__main__":
     # plt.gca().set_ylim([0, ymax])
 
     handles_set = []
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number), y_error_rescaled, linewidth=3, label="Average Error"
     )
     handles_set.append(labelsim)
 
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number),
         y_error_rescaled_max,
         linewidth=1,
@@ -885,7 +885,7 @@ if __name__ == "__main__":
     )
     handles_set.append(labelsim)
 
-    labelsim, _ = plt.plot(
+    (labelsim,) = plt.plot(
         np.arange(days_number),
         y_error_rescaled_min,
         linewidth=1,
