@@ -5,7 +5,6 @@ import os
 import sys
 import warnings
 from functools import wraps
-from typing import List
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -32,7 +31,7 @@ else:
 
 @check_args_type
 def compare_numagents_camp(
-    out_dir: str, datas: List["DataFrame"], name: str, legend_loc: int = 4
+    out_dir: str, datas: pd.DataFrame, name: str, legend_loc: int = 4
 ) -> None:
     """
     Advanced plotting function for validation of refugee registration numbers in camps.
@@ -54,7 +53,7 @@ def compare_numagents_camp(
         days = np.arange(len(y1))
 
         # Plotting lines representing simulation results.
-        labelsim, _ = plt.plot(days, y1, linewidth=8, label="%s" % (names[n]))
+        (labelsim,) = plt.plot(days, y1, linewidth=8, label="%s" % (names[n]))
         labelssim.append(labelsim)
         n += 1
 
@@ -91,10 +90,10 @@ def compare_numagents_camp(
 
         print(y1_rescaled)
 
-        labelsim, _ = plt.plot(days, y1_rescaled, linewidth=8, label="%s" % (names[n]))
+        (labelsim,) = plt.plot(days, y1_rescaled, linewidth=8, label="%s" % (names[n]))
         labelssim.append(labelsim)
         n += 1
-        # labeldata, = plt.plot(days, y1, linewidth=8, label="%s UNHCR data" % (name.title()))
+        # (labeldata,) = plt.plot(days, y1, linewidth=8, label="%s UNHCR data" % (name.title()))
 
     plt.legend(handles=labelssim, loc=legend_loc, prop={"size": 18})
 

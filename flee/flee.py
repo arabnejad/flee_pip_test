@@ -539,10 +539,10 @@ class Location:
             ),
             file=sys.stderr,
         )
-        for l in self.links:
+        for link in self.links:
             print(
                 "Link from {} to {}, dist: {}, pop. {}".format(
-                    self.name, l.endpoint.name, l.get_distance(self.time), l.numAgents
+                    self.name, link.endpoint.name, link.get_distance(self.time), link.numAgents
                 ),
                 file=sys.stderr,
             )
@@ -681,11 +681,11 @@ class Location:
             self.NeighbourhoodScore = 0.0
             total_link_weight = 0.0
 
-            for l in self.links:
-                self.NeighbourhoodScore += l.endpoint.LocationScore / float(
-                    l.get_distance(self.time)
+            for link in self.links:
+                self.NeighbourhoodScore += link.endpoint.LocationScore / float(
+                    link.get_distance(self.time)
                 )
-                total_link_weight += 1.0 / float(l.get_distance(self.time))
+                total_link_weight += 1.0 / float(link.get_distance(self.time))
 
             self.NeighbourhoodScore /= total_link_weight
             self.setScore(index=2, value=self.NeighbourhoodScore)
@@ -703,9 +703,11 @@ class Location:
             self.RegionScore = 0.0
             total_link_weight = 0.0
 
-            for l in self.links:
-                self.RegionScore += l.endpoint.NeighbourhoodScore / float(l.get_distance(self.time))
-                total_link_weight += 1.0 / float(l.get_distance(self.time))
+            for link in self.links:
+                self.RegionScore += link.endpoint.NeighbourhoodScore / float(
+                    link.get_distance(self.time)
+                )
+                total_link_weight += 1.0 / float(link.get_distance(self.time))
 
             self.RegionScore /= total_link_weight
             self.setScore(index=3, value=self.RegionScore)
@@ -796,9 +798,9 @@ class Ecosystem:
             List[str]: Description
         """
         camp_names = []
-        for l in self.locations:
-            if l.camp:
-                camp_names += [l.name]
+        for loc in self.locations:
+            if loc.camp:
+                camp_names += [loc.name]
         return camp_names
 
     @check_args_type
@@ -814,10 +816,10 @@ class Ecosystem:
         """
         vertices = []
         edges = []
-        for l in self.locations:
-            vertices += [l.name]
-            for p in l.links:
-                edges += [[l.name, p.endpoint.name, p.get_distance(self.time)]]
+        for loc in self.locations:
+            vertices += [loc.name]
+            for p in loc.links:
+                edges += [[loc.name, p.endpoint.name, p.get_distance(self.time)]]
 
         return vertices, edges
 
@@ -831,11 +833,11 @@ class Ecosystem:
             arrival_total = 0
             tmp_num_arrivals = 0
 
-            for l in self.locations:
-                if l.Camp is True:
-                    arrival_total += np.sum(l.incoming_journey_lengths)
-                    tmp_num_arrivals += len(l.incoming_journey_lengths)
-                    l.incoming_journey_lengths = []
+            for loc in self.locations:
+                if loc.Camp is True:
+                    arrival_total += np.sum(loc.incoming_journey_lengths)
+                    tmp_num_arrivals += len(loc.incoming_journey_lengths)
+                    loc.incoming_journey_lengths = []
 
             self.num_arrivals += [tmp_num_arrivals]
 
@@ -1438,15 +1440,15 @@ class Ecosystem:
         Summary
         """
         # update level 1, 2 and 3 location scores
-        for l in self.locations:
-            l.time = self.time
-            l.updateLocationScore()
+        for loc in self.locations:
+            loc.time = self.time
+            loc.updateLocationScore()
 
-        for l in self.locations:
-            l.updateNeighbourhoodScore()
+        for loc in self.locations:
+            loc.updateNeighbourhoodScore()
 
-        for l in self.locations:
-            l.updateRegionScore()
+        for loc in self.locations:
+            loc.updateRegionScore()
 
         # update agent locations
         for a in self.agents:
@@ -1665,8 +1667,8 @@ class Ecosystem:
                 "First conflict zone is called {}".format(self.conflict_zones[0].name),
                 file=sys.stderr,
             )
-        for l in self.locations:
-            print(l.name, l.numAgents, file=sys.stderr)
+        for loc in self.locations:
+            print(loc.name, loc.numAgents, file=sys.stderr)
 
     @check_args_type
     def printComplete(self) -> None:
@@ -1675,11 +1677,12 @@ class Ecosystem:
         """
         print("Time: ", self.time, ", # of agents: ", len(self.agents))
         if self.print_location_output:
-            for l in self.locations:
+            for loc in self.locations:
                 print(
-                    "Location name %s, number of agents %s" % (l.name, l.numAgents), file=sys.stderr
+                    "Location name %s, number of agents %s" % (loc.name, loc.numAgents),
+                    file=sys.stderr,
                 )
-                l.print()
+                loc.print()
 
     @check_args_type
     def getRankN(self, t: int) -> bool:

@@ -138,10 +138,10 @@ def plot_camps(data: Type[pd.DataFrame], config: str, output: str) -> None:
         plt.ylabel("Number of refugees")
         plt.title("{} Simulation - config = {}".format(name[0], config))
 
-        label1, _ = plt.plot(
+        (label1,) = plt.plot(
             data_filtered.index, y1, "g", linewidth=5, label="{} Simulation".format(name[0])
         )
-        label2, _ = plt.plot(data_filtered.index, y2, "b", linewidth=5, label="UNHCR data")
+        (label2,) = plt.plot(data_filtered.index, y2, "b", linewidth=5, label="UNHCR data")
 
         plt.legend(handles=[label1, label2], loc=0, prop={"size": 14})
 
@@ -279,7 +279,7 @@ def plot_errors(data, config: str, output: str, model: str = "macro") -> None:
         len(diffdata),
     )
 
-    labeldiff_rescaled, _ = plt.plot(
+    (labeldiff_rescaled,) = plt.plot(
         np.arange(len(diffdata_rescaled)), diffdata_rescaled, linewidth=5, label="Error"
     )
 
@@ -293,7 +293,7 @@ def plot_errors(data, config: str, output: str, model: str = "macro") -> None:
     #               ERROR COMPARISON              #
     ###############################################
 
-    labeldiff, _ = plt.plot(
+    (labeldiff,) = plt.plot(
         np.arange(len(diffdata)), diffdata, linewidth=5, label="error (not rescaled)"
     )
 
