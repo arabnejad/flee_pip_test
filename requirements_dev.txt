@@ -4,7 +4,6 @@ mkdocs
 mkdocs-autolinks-plugin
 mkdocs-autorefs
 mkdocs-awesome-pages-plugin
-mkdocs-click
 mkdocs-enumerate-headings-plugin
 mkdocs-macros-plugin
 mkdocs-markdownextradata-plugin

@@ -152,20 +152,20 @@ class Ecosystem(flee.Ecosystem):
         """
         # print("Time: ", self.time, ", # of agents: ", len(self.agents))
         if self.IPCAffectsSpawnLocation:
-            for l, loc in enumerate(self.IPC_locations):
+            for i, loc in enumerate(self.IPC_locations):
                 print(
                     loc.name,
-                    "Conflict:", self.locations[l].conflict,
+                    "Conflict:", self.locations[i].conflict,
                     "Pop:", loc.pop,
                     "IPC:", loc.IPC,
                     "mc:", loc.movechance,
-                    "weight:", self.IPC_location_weights[l],
+                    "weight:", self.IPC_location_weights[i],
                     file=sys.stderr
                 )
         else:
-            for l in self.locations:
-                print(l.name, "Agents: ", l.numAgents, "State: ", l.region,
-                      "IPC: ", l.IPC, "movechance: ", l.movechance, file=sys.stderr)
+            for loc in self.locations:
+                print(loc.name, "Agents: ", loc.numAgents, "State: ", loc.region,
+                      "IPC: ", loc.IPC, "movechance: ", loc.movechance, file=sys.stderr)
 
 
 if __name__ == "__main__":

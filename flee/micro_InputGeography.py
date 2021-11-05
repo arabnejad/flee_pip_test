@@ -97,32 +97,32 @@ class InputGeography(based_InputGeography_class):
         lm = {}
         num_conflict_zones = 0
 
-        for l in self.locations:
-            name = l[0]
+        for loc in self.locations:
+            name = loc[0]
 
             # if population field is empty, just set it to 0.
-            if len(l[1]) < 1:
+            if len(loc[1]) < 1:
                 population = 0
             else:
-                population = int(l[1]) // SimulationSettings.PopulationScaledownFactor
+                population = int(loc[1]) // SimulationSettings.PopulationScaledownFactor
 
-            x = float(l[2]) if len(l[2]) > 0 else 0.0
-            y = float(l[3]) if len(l[3]) > 0 else 0.0
+            x = float(loc[2]) if len(loc[2]) > 0 else 0.0
+            y = float(loc[3]) if len(loc[3]) > 0 else 0.0
 
             # if population field is empty, just set it to 0.
-            if len(l[7]) < 1:
+            if len(loc[7]) < 1:
                 country = "unknown"
             else:
-                country = l[7]
+                country = loc[7]
 
-            # print(l, file=sys.stderr)
-            location_type = l[4]
+            # print(loc, file=sys.stderr)
+            location_type = loc[4]
             if "conflict" in location_type.lower():
                 num_conflict_zones += 1
-                if int(l[5]) > 0:
+                if int(loc[5]) > 0:
                     location_type = "town"
 
-            if "camp" in l[4].lower():
+            if "camp" in loc[4].lower():
                 lm[name] = e.addLocation(
                     name=name,
                     location_type=location_type,
@@ -141,44 +141,44 @@ class InputGeography(based_InputGeography_class):
                     country=country,
                 )
 
-        for l in self.links:
-            if len(l) > 4:
-                if int(l[3]) == 1:
+        for link in self.links:
+            if len(link) > 4:
+                if int(link[3]) == 1:
                     e.linkUp(
-                        endpoint1=l[0],
-                        endpoint2=l[1],
-                        distance=float(l[2]),
+                        endpoint1=link[0],
+                        endpoint2=link[1],
+                        distance=float(link[2]),
                         forced_redirection=True,
-                        link_type=str(l[4]),
+                        link_type=str(link[4]),
                     )
-                if int(l[3]) == 2:
+                if int(link[3]) == 2:
                     e.linkUp(
-                        endpoint1=l[1],
-                        endpoint2=l[0],
-                        distance=float(l[2]),
+                        endpoint1=link[1],
+                        endpoint2=link[0],
+                        distance=float(link[2]),
                         forced_redirection=True,
-                        link_type=str(l[4]),
+                        link_type=str(link[4]),
                     )
                 else:
                     e.linkUp(
-                        endpoint1=l[0],
-                        endpoint2=l[1],
-                        distance=float(l[2]),
+                        endpoint1=link[0],
+                        endpoint2=link[1],
+                        distance=float(link[2]),
                         forced_redirection=False,
-                        link_type=str(l[4]),
+                        link_type=str(link[4]),
                     )
             else:
                 e.linkUp(
-                    endpoint1=l[0],
-                    endpoint2=l[1],
-                    distance=float(l[2]),
+                    endpoint1=link[0],
+                    endpoint2=link[1],
+                    distance=float(link[2]),
                     forced_redirection=False,
-                    link_type=str(l[4]),
+                    link_type=str(link[4]),
                 )
 
         e.closures = []
-        for l in self.closures:
-            e.closures.append([l[0], l[1], l[2], int(l[3]), int(l[4])])
+        for link in self.closures:
+            e.closures.append([link[0], link[1], link[2], int(link[3]), int(link[4])])
 
         if num_conflict_zones < 1:
             print(

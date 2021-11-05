@@ -11,7 +11,7 @@ from typing import List, Tuple
 import matplotlib
 
 # pylint: disable=wrong-import-position
-matplotlib.use("Agg")  # noqa
+matplotlib.use("Agg")
 # pylint: enable=wrong-import-position
 import matplotlib.pyplot as plt
 import numpy as np
