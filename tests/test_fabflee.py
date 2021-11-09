@@ -145,6 +145,7 @@ def run_par():
 
             print("ret2 = {}".format(ret2), file=sys.stderr)
             print("error = {}".format(e), file=sys.stderr)
+            print("error.cmd = {}".format(e.cmd), file=sys.stderr)
 
         os.chdir(current_dir)
         return ret
