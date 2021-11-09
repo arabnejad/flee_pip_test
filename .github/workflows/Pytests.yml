@@ -82,6 +82,8 @@ jobs:
           python3 setup.py install      
           git clone https://github.com/djgroen/FabFlee.git         
           
+          export TMPDIR=/tmp
+          
           cd FabFlee/config_files/mali
           mpirun -np 2 python3 run_par.py input_csv source_data 10 simsetting.csv > out.csv
           cd ../../..
