@@ -146,6 +146,12 @@ def run_par():
             print("ret2 = {}".format(ret2), file=sys.stderr)
             print("error = {}".format(e), file=sys.stderr)
             print("error.cmd = {}".format(e.cmd), file=sys.stderr)
+            with open("out.csv", encoding="utf_8") as csvfile:
+                reader = csv.reader(csvfile)
+                for r in reader:
+                    print("{}".format(r), file=sys.stderr)
+                lines = len(list(reader))
+                print("lines = {}".format(lines), file=sys.stderr)
 
         os.chdir(current_dir)
         return ret
