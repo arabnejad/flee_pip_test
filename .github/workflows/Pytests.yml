@@ -81,5 +81,10 @@ jobs:
         run: |
           python3 setup.py install      
           git clone https://github.com/djgroen/FabFlee.git         
-          python3 -m pytest --log-cli-level=DEBUG tests/
+          
+          cd FabFlee/config_files/mali
+          mpirun -np 2 python3 run_par.py input_csv source_data 10 simsetting.csv > out.csv
+          cd ../../..
+
+          # python3 -m pytest --log-cli-level=DEBUG tests/
 
