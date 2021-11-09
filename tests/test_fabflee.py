@@ -123,6 +123,7 @@ def run_par():
         # )
 
         os.chdir(config_path)
+
         try:
             output = subprocess.check_output(
                 cmd,
@@ -143,6 +144,7 @@ def run_par():
             ret2 += "e.output= {} e.stdout= {}".format(e.output, e.stdout)
 
             print("ret2 = {}".format(ret2), file=sys.stderr)
+            print("error = {}".format(e), file=sys.stderr)
 
         os.chdir(current_dir)
         return ret
