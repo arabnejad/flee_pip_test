@@ -4,7 +4,7 @@ import sys
 import subprocess
 import pytest
 import logging
-
+import glob
 
 base = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
@@ -147,6 +147,9 @@ def run_par():
             print("ret2 = {}".format(ret2), file=sys.stderr)
             print("error = {}".format(e), file=sys.stderr)
             print("error.cmd = {}".format(e.cmd), file=sys.stderr)
+            print("dir list :", file=sys.stderr)
+            print(glob.glob("*"), file=sys.stderr)
+            print("-----------", file=sys.stderr)
             with open("out.csv", encoding="utf_8") as csvfile:
                 reader = csv.reader(csvfile)
                 for r in reader:
