@@ -88,6 +88,10 @@ def run_py():
                 " ".join(cmd), e.returncode, e.output
             )
 
+        # clean generated out.csv file
+        if os.path.isfile("out.csv"):
+            os.remove(out.csv)
+
         os.chdir(current_dir)
         return ret
         # assert(output.find('success') >= 0)
@@ -156,6 +160,10 @@ def run_par():
                     print("{}".format(r), file=sys.stderr)
                 lines = len(list(reader))
                 print("lines = {}".format(lines), file=sys.stderr)
+
+        # clean generated out.csv file
+        if os.path.isfile("out.csv"):
+            os.remove(out.csv)
 
         os.chdir(current_dir)
         return ret
