@@ -127,11 +127,12 @@ def run_par():
         #     # stderr=subprocess.STDOUT
         # )
 
-        os.chdir(config_path)
+        # os.chdir(config_path)
         cmd = " ".join([str(x) for x in cmd])
         try:
             proc = subprocess.Popen(
                 [cmd],
+                cwd=config_path,
                 shell=True,
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
@@ -200,7 +201,7 @@ def run_par():
         if os.path.isfile("out.csv"):
             os.remove("out.csv")
 
-        os.chdir(current_dir)
+        # os.chdir(current_dir)
         return ret
         # assert(output.find('success') >= 0)
     return _run_par
