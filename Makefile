@@ -31,7 +31,7 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+clean: clean-build clean-pyc clean-test clean-lint ## remove all build, test, coverage and Python artifacts
 
 
 clean-build: ## remove build artifacts
@@ -51,6 +51,9 @@ clean-pyc: ## remove Python file artifacts
 
 clean-test: ## remove pytest artifacts
 	rm -fr .pytest_cache
+
+clean-lint: ## remove pytest artifacts
+	rm -fr .linter_reports
 
 
 lint/flake8: ## check style with flake8
