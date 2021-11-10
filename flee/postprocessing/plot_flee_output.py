@@ -95,12 +95,12 @@ class SimulationErrors:
 
 
 @check_args_type
-def plot_camps(data: Type[pd.DataFrame], config: str, output: str) -> None:
+def plot_camps(data: pd.DataFrame, config: str, output: str) -> None:
     """
     Summary
 
     Args:
-        data (Type[pd.DataFrame]): Description
+        data (pd.DataFrame): Description
         config (str): Description
         output (str): Description
     """
@@ -151,7 +151,7 @@ def plot_camps(data: Type[pd.DataFrame], config: str, output: str) -> None:
 
 
 @check_args_type
-def plot_numagents(data: Type[pd.DataFrame], config: str, output: str) -> None:
+def plot_numagents(data: pd.DataFrame, config: str, output: str) -> None:
     """
     Summary
 

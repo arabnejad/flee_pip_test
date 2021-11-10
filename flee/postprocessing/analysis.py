@@ -56,13 +56,13 @@ def abs_error(val: int, correct_val: Union[float, int]) -> float:
 
 
 @check_args_type
-def abs_diffs(forecast_vals: List[float], correct_vals: List[float]) -> np.ndarray:
+def abs_diffs(forecast_vals: np.ndarray, correct_vals: np.ndarray) -> np.ndarray:
     """
     Summary
 
     Args:
-        forecast_vals (List[float]): Description
-        correct_vals (List[float]): Description
+        forecast_vals (np.ndarray): Description
+        correct_vals (np.ndarray): Description
 
     Returns:
         np.ndarray: Description
@@ -71,13 +71,13 @@ def abs_diffs(forecast_vals: List[float], correct_vals: List[float]) -> np.ndarr
 
 
 @check_args_type
-def mean_abs_diffs(forecast_vals: List[float], correct_vals: List[float]) -> np.ndarray:
+def mean_abs_diffs(forecast_vals: np.ndarray, correct_vals: np.ndarray) -> np.ndarray:
     """
     Summary
 
     Args:
-        forecast_vals (List[float]): Description
-        correct_vals (List[float]): Description
+        forecast_vals (np.ndarray): Description
+        correct_vals (np.ndarray): Description
 
     Returns:
         np.ndarray: Description
@@ -86,14 +86,14 @@ def mean_abs_diffs(forecast_vals: List[float], correct_vals: List[float]) -> np.
 
 
 @check_args_type
-def calculate_ln_accuracy_ratio(forecast_vals: List[float], actual_vals: List[float]) -> np.ndarray:
+def calculate_ln_accuracy_ratio(forecast_vals: np.ndarray, actual_vals: np.ndarray) -> np.ndarray:
     """
     Calculate the log of the accuracy ratio (forecast / actual)
     Return -1 if there is a 0 in the actual values
 
     Args:
-        forecast_vals (List[float]): Description
-        actual_vals (List[float]): Description
+        forecast_vals (np.ndarray): Description
+        actual_vals (np.ndarray): Description
 
     Returns:
         np.ndarray: Description
