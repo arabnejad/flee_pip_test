@@ -65,6 +65,9 @@ jobs:
           ${{ matrix.install-mpi }}
           mpirun --version
 
+          which mpirun
+          
+
       # - name: Install MPI 📥
       #   uses: mpi4py/setup-mpi@v1
       #   with:

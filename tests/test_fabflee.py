@@ -128,10 +128,10 @@ def run_par():
         # )
 
         os.chdir(config_path)
-
+        cmd = " ".join([str(x) for x in cmd])
         try:
             proc = subprocess.Popen(
-                cmd,
+                [cmd],
                 shell=True,
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
