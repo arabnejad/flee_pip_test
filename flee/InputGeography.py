@@ -116,7 +116,7 @@ class InputGeography:
             values = csv.reader(csvfile)
 
             for row in values:
-                if row[0][0] == "#":
+                if len(row) == 0 or row[0][0] == "#":
                     pass
                 else:
                     # print(row)
@@ -152,7 +152,7 @@ class InputGeography:
             values = csv.reader(csvfile)
 
             for row in values:
-                if row[0][0] == "#":
+                if len(row) == 0 or row[0][0] == "#":
                     pass
                 else:
                     # print(row)
@@ -173,7 +173,7 @@ class InputGeography:
             values = csv.reader(csvfile)
 
             for row in values:
-                if row[0][0] == "#":
+                if len(row) == 0 or row[0][0] == "#":
                     pass
                 else:
                     # print(row)

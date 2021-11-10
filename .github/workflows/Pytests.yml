@@ -16,20 +16,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:        
-        os: [ "ubuntu-latest", "macOS-latest" ]
+        os: [ "ubuntu-18.04", "macos-11" ]
         python-version: ["3.7", "3.8", "3.9" ]
         mpi: [mpich, openmpi]
         include:
-        - os: ubuntu-latest
+        - os: ubuntu-18.04
           mpi: mpich
           install-mpi: sudo apt install -y mpich libmpich-dev
-        - os: ubuntu-latest
+        - os: ubuntu-18.04
           mpi: openmpi
           install-mpi: sudo apt install -y openmpi-bin libopenmpi-dev
-        - os: macos-latest
+        - os: macos-11
           mpi: mpich
           install-mpi: brew install mpich
-        - os: macos-latest
+        - os: macos-11
           mpi: openmpi
           install-mpi: brew install openmpi
 
@@ -81,5 +81,14 @@ jobs:
         run: |
           python3 setup.py install      
           git clone https://github.com/djgroen/FabFlee.git         
+          
+          export TMPDIR=/tmp
+          export OMPI_MCA_btl=self,tcp
+          export OMPI_MCA_btl_vader_backing_directory=/tmp
+
+          cd FabFlee/config_files/mali
+          mpirun -np 2 python3 run_par.py input_csv source_data 10 simsetting.csv > out.csv
+          cd ../../..
+
           python3 -m pytest --log-cli-level=DEBUG tests/
 
