@@ -145,9 +145,11 @@ def run_par():
         if proc.returncode not in acceptable_err_subprocesse_ret_codes:
             raise RuntimeError(
                 "\njob execution encountered an error (return code {})"
-                "while executing '{}'".format(proc.returncode, cmd)
+                "while executing \ncmd = {}\noutput = {}".format(
+                    proc.returncode, cmd, stdout.decode("utf-8")
+                )
             )
-        print(stdout.decode("utf-8"))
+        # print(stdout.decode("utf-8"))
         proc.terminate()
         """
         try:
