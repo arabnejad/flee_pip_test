@@ -37,6 +37,14 @@ jobs:
       - name: Checkout  🛎️
         uses: "actions/checkout@v2"    
 
+      - name: Install MPI 📥
+        run: |
+          ${{ matrix.install-mpi }}
+          mpirun --version
+
+          which mpirun
+          
+
       - name: Set up Python ${{ matrix.python-version }}  🐍
         uses: actions/setup-python@v2
         with:
@@ -59,21 +67,6 @@ jobs:
 
           python3 --version
           python --version
-
-      - name: Install MPI 📥
-        run: |
-          ${{ matrix.install-mpi }}
-          mpirun --version
-
-          which mpirun
-          
-
-      # - name: Install MPI 📥
-      #   uses: mpi4py/setup-mpi@v1
-      #   with:
-      #     mpi: ${{ matrix.mpi }}
-
-
 
       - name: Install Python Dependencies 📥
         run: |
