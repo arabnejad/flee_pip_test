@@ -376,7 +376,7 @@ class DataTable:
             print(self.get_daily_difference(day + i))
 
     @check_args_type
-    def get_interpolated_data(self, column: int, day: int) -> float:
+    def get_interpolated_data(self, column: int, day: int) -> int:
         """
         Gets in a given column for a given day. Interpolates between days as needed.
 
@@ -385,7 +385,7 @@ class DataTable:
             day (int): Description
 
         Returns:
-            float: Description
+            int: Description
         """
         ref_table = self.data_table[column]
 
@@ -393,7 +393,7 @@ class DataTable:
         # print(ref_table[0][self.days_column])
         old_day = ref_table[0, self.days_column]
         if day <= old_day:
-            return old_val
+            return int(old_val)
 
         for i in range(1, len(ref_table)):
             # print(day, ref_table[i][self.days_column])
@@ -409,7 +409,7 @@ class DataTable:
                     return -1
 
                 # print(day, old_day, ref_table[i][self.total_refugee_column], old_val)
-                return (
+                return int(
                     old_val + fraction * float(ref_table[i, self.total_refugee_column] - old_val)
                 )
 
@@ -417,10 +417,10 @@ class DataTable:
         # self.header[column], ", last ref_table values: ",
         # ref_table[i-1][self.total_refugee_column],
         # ref_table[i][self.days_column])
-        return ref_table[-1, self.total_refugee_column]
+        return int(ref_table[-1, self.total_refugee_column])
 
     @check_args_type
-    def get_raw_data(self, column: int, day: int) -> float:
+    def get_raw_data(self, column: int, day: int) -> int:
         """
         Gets in a given column for a given day. Does not Interpolate.
 
@@ -443,7 +443,7 @@ class DataTable:
                 # old_day = ref_table[i][self.days_column]
             else:
                 break
-        return old_val
+        return int(old_val)
 
     @check_args_type
     def _find_headerindex(self, name: str) -> int:
@@ -464,7 +464,7 @@ class DataTable:
         sys.exit("Error: can't find the header %s in the header list" % (name))
 
     @check_args_type
-    def get_field(self, name: str, day: int, FullInterpolation=True) -> float:
+    def get_field(self, name: str, day: int, FullInterpolation=True) -> int:
         """
         Gets in a given named column for a given day. Interpolates between days if needed.
 
@@ -474,7 +474,7 @@ class DataTable:
             FullInterpolation (bool, optional): Description
 
         Returns:
-            float: Description
+            int: Description
         """
         i = self._find_headerindex(name)
 

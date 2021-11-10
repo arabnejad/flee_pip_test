@@ -1,6 +1,6 @@
 import os
 from functools import wraps
-from typing import List
+from typing import List, Union
 
 import numpy as np
 
@@ -21,13 +21,13 @@ ROUND_NDIGITS = 4
 
 
 @check_args_type
-def rel_error(val: int, correct_val: float) -> float:
+def rel_error(val: int, correct_val: Union[float, int]) -> float:
     """
     Summary
 
     Args:
         val (int): Description
-        correct_val (float): Description
+        correct_val (Union[float, int]): Description
 
     Returns:
         float: Description
@@ -38,13 +38,13 @@ def rel_error(val: int, correct_val: float) -> float:
 
 
 @check_args_type
-def abs_error(val: int, correct_val: float) -> float:
+def abs_error(val: int, correct_val: Union[float, int]) -> float:
     """
     Summary
 
     Args:
         val (int): Description
-        correct_val (float): Description
+        correct_val (Union[float, int]): Description
 
     Returns:
         float: Description
