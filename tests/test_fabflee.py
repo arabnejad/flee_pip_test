@@ -130,6 +130,27 @@ def run_par():
         os.chdir(config_path)
 
         try:
+            proc = subprocess.Popen(
+                cmd,
+                shell=True,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            (stdout, stderr) = proc.communicate()
+        except Exception as e:
+            raise RuntimeError("Unexpected error: {}".format(e))
+
+        acceptable_err_subprocesse_ret_codes = [0]
+        if proc.returncode not in acceptable_err_subprocesse_ret_codes:
+            raise RuntimeError(
+                "\njob execution encountered an error (return code {})"
+                "while executing '{}'".format(proc.returncode, request.param)
+            )
+        print(stdout.decode("utf-8"))
+        proc.terminate()
+        """
+        try:
             output = subprocess.check_output(
                 cmd,
                 shell=True,
@@ -161,6 +182,7 @@ def run_par():
                 lines = len(list(reader))
                 print("lines = {}".format(lines), file=sys.stderr)
 
+        """
         # clean generated out.csv file
         if os.path.isfile("out.csv"):
             os.remove("out.csv")
