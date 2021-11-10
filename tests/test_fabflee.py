@@ -203,5 +203,6 @@ def run_par():
             os.remove(os.path.join(config_path, "out.csv"))
 
         return "OK"
+
         # assert(output.find('success') >= 0)
     return _run_par

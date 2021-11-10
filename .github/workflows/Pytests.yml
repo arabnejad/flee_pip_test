@@ -85,6 +85,7 @@ jobs:
 
           cd FabFlee/config_files/mali
           tree .
+          mpirun -np 2 python3 run_par.py input_csv source_data 10 simsetting.csv > out.csv
           cd ../../..
 
           python3 -m pytest --log-cli-level=DEBUG tests/
