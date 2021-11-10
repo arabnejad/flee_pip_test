@@ -141,6 +141,17 @@ def run_par():
         except Exception as e:
             raise RuntimeError("Unexpected error: {}".format(e))
 
+        print("dir list :", file=sys.stderr)
+        print(glob.glob("*"), file=sys.stderr)
+        print("-----------", file=sys.stderr)
+        if os.path.isfile("out.csv"):
+            with open("out.csv", encoding="utf_8") as csvfile:
+                reader = csv.reader(csvfile)
+                for r in reader:
+                    print("{}".format(r), file=sys.stderr)
+                lines = len(list(reader))
+                print("lines = {}".format(lines), file=sys.stderr)
+
         acceptable_err_subprocesse_ret_codes = [0]
         if proc.returncode not in acceptable_err_subprocesse_ret_codes:
             raise RuntimeError(
