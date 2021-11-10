@@ -90,7 +90,7 @@ def run_py():
 
         # clean generated out.csv file
         if os.path.isfile("out.csv"):
-            os.remove(out.csv)
+            os.remove("out.csv")
 
         os.chdir(current_dir)
         return ret
@@ -163,7 +163,7 @@ def run_par():
 
         # clean generated out.csv file
         if os.path.isfile("out.csv"):
-            os.remove(out.csv)
+            os.remove("out.csv")
 
         os.chdir(current_dir)
         return ret
