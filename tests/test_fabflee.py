@@ -68,8 +68,6 @@ def test_par_ssudan(run_par):
 def run_py():
     def _run_py(config, simulation_period):
         config_path = os.path.join(base, config)
-        current_dir = os.getcwd()
-        os.chdir(config_path)
 
         cmd = ["python3",
                "run.py",
@@ -79,21 +77,35 @@ def run_py():
                "simsetting.csv",
                "> out.csv"
                ]
-
-        ret = "OK"
+        cmd = " ".join([str(x) for x in cmd])
         try:
-            output = subprocess.check_output(cmd).decode("utf-8")
-        except subprocess.CalledProcessError as e:
-            ret = "Command '{}' return non-zero exit status: {}\n{}".format(
-                " ".join(cmd), e.returncode, e.output
+            proc = subprocess.Popen(
+                [cmd],
+                cwd=config_path,
+                shell=True,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
             )
+            (stdout, stderr) = proc.communicate()
+        except Exception as e:
+            raise RuntimeError("Unexpected error: {}".format(e))
+
+        acceptable_err_subprocesse_ret_codes = [0]
+        if proc.returncode not in acceptable_err_subprocesse_ret_codes:
+            raise RuntimeError(
+                "\njob execution encountered an error (return code {})"
+                "while executing \ncmd = {}\noutput = {}".format(
+                    proc.returncode, cmd, stdout.decode("utf-8")
+                )
+            )
+        proc.terminate()
 
         # clean generated out.csv file
-        if os.path.isfile("out.csv"):
-            os.remove("out.csv")
+        if os.path.isfile(os.path.join(config_path, "out.csv")):
+            os.remove(os.path.join(config_path, "out.csv"))
 
-        os.chdir(current_dir)
-        return ret
+        return "OK"
         # assert(output.find('success') >= 0)
     return _run_py
 
@@ -114,21 +126,8 @@ def run_par():
                "simsetting.csv",
                "> out.csv"
                ]
-
-        print("cmd = {}".format(cmd), file=sys.stderr)
-        ret = "OK"
-        # output = subprocess.check_output(
-        #     cmd,
-        #     # shell=True,
-        #     # capture_output=True,
-        #     stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-        #     text=True,
-        #     cwd=config_path
-        #     # stderr=subprocess.STDOUT
-        # )
-
-        # os.chdir(config_path)
         cmd = " ".join([str(x) for x in cmd])
+
         try:
             proc = subprocess.Popen(
                 [cmd],
@@ -143,10 +142,10 @@ def run_par():
             raise RuntimeError("Unexpected error: {}".format(e))
 
         print("dir list :", file=sys.stderr)
-        print(glob.glob("*"), file=sys.stderr)
+        print(glob.glob("{}/*".format(config_path)), file=sys.stderr)
         print("-----------", file=sys.stderr)
-        if os.path.isfile("out.csv"):
-            with open("out.csv", encoding="utf_8") as csvfile:
+        if os.path.isfile(os.path.join(config_path, "out.csv")):
+            with open(os.path.join(config_path, "out.csv"), encoding="utf_8") as csvfile:
                 reader = csv.reader(csvfile)
                 for r in reader:
                     print("{}".format(r), file=sys.stderr)
@@ -198,10 +197,9 @@ def run_par():
 
         """
         # clean generated out.csv file
-        if os.path.isfile("out.csv"):
-            os.remove("out.csv")
+        if os.path.isfile(os.path.join(config_path, "out.csv")):
+            os.remove(os.path.join(config_path, "out.csv"))
 
-        # os.chdir(current_dir)
-        return ret
+        return "OK"
         # assert(output.find('success') >= 0)
     return _run_par
