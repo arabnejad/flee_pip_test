@@ -128,7 +128,7 @@ def run_par():
         try:
             output = subprocess.check_output(
                 cmd,
-                # shell=True,
+                shell=True,
                 stderr=subprocess.STDOUT,
                 # stdout=sys.stdout,
                 text=True,
