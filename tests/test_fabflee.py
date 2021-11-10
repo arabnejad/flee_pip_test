@@ -1,9 +1,10 @@
 import os
+import csv
 import sys
 import subprocess
 import pytest
 import logging
-
+import glob
 
 base = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
@@ -123,6 +124,7 @@ def run_par():
         # )
 
         os.chdir(config_path)
+
         try:
             output = subprocess.check_output(
                 cmd,
@@ -133,16 +135,27 @@ def run_par():
             )
         except subprocess.CalledProcessError as e:
             # ret = "Command '{}' return non-zero exit status: "
-            # ret = "{} -- {} -- {}".format(
-            #     e.returncode, e.output, e.stdout
-            # )
+            ret = "{} -- {} -- {}".format(
+                e.returncode, e.output, e.stdout
+            )
 
-            ret = "Command '{}' return non-zero exit status: e.returncode = {} ".format(
+            ret2 = "Command '{}' return non-zero exit status: e.returncode = {} ".format(
                 cmd, e.returncode
             )
-            ret += "e.output= {} e.stdout= {}".format(e.output, e.stdout)
+            ret2 += "e.output= {} e.stdout= {}".format(e.output, e.stdout)
 
-            print("ret = {}".format(ret), file=sys.stderr)
+            print("ret2 = {}".format(ret2), file=sys.stderr)
+            print("error = {}".format(e), file=sys.stderr)
+            print("error.cmd = {}".format(e.cmd), file=sys.stderr)
+            print("dir list :", file=sys.stderr)
+            print(glob.glob("*"), file=sys.stderr)
+            print("-----------", file=sys.stderr)
+            with open("out.csv", encoding="utf_8") as csvfile:
+                reader = csv.reader(csvfile)
+                for r in reader:
+                    print("{}".format(r), file=sys.stderr)
+                lines = len(list(reader))
+                print("lines = {}".format(lines), file=sys.stderr)
 
         os.chdir(current_dir)
         return ret
