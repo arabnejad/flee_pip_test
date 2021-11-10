@@ -39,10 +39,11 @@ jobs:
 
       - name: Install MPI 📥
         run: |
-          ${{ matrix.install-mpi }}
+          ${{ matrix.install-mpi }}          
           mpirun --version
 
           which mpirun
+          which tree
           
 
       - name: Set up Python ${{ matrix.python-version }}  🐍
@@ -83,7 +84,7 @@ jobs:
           export OMPI_MCA_btl_vader_backing_directory=/tmp
 
           cd FabFlee/config_files/mali
-          mpirun -np 2 python3 run_par.py input_csv source_data 10 simsetting.csv > out.csv
+          tree .
           cd ../../..
 
           python3 -m pytest --log-cli-level=DEBUG tests/

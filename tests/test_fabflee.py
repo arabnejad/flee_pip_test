@@ -152,6 +152,8 @@ def run_par():
                 lines = len(list(reader))
                 print("lines = {}".format(lines), file=sys.stderr)
 
+        os.system("tree {}".format(config_path))
+
         acceptable_err_subprocesse_ret_codes = [0]
         if proc.returncode not in acceptable_err_subprocesse_ret_codes:
             raise RuntimeError(
