@@ -1305,9 +1305,13 @@ class Ecosystem:
             Debug (bool, optional): Description
         """
         if twoway:
-            self._change_location_1way(location_name, mode="reopen", direction="both", Debug=Debug)
+            return self._change_location_1way(
+                location_name, mode="reopen", direction="both", Debug=Debug
+            )
         else:
-            self._change_location_1way(location_name, mode="reopen", direction="in", Debug=Debug)
+            return self._change_location_1way(
+                location_name, mode="reopen", direction="in", Debug=Debug
+            )
 
     @check_args_type
     def add_conflict_zone(self, name: str, change_movechance: bool = True) -> None:
