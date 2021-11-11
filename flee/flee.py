@@ -1035,7 +1035,9 @@ class Ecosystem:
             bool: Description
         """
         if twoway:
-            self._remove_link_1way(startpoint=endpoint, endpoint=startpoint, close_only=close_only)
+            return self._remove_link_1way(
+                startpoint=endpoint, endpoint=startpoint, close_only=close_only
+            )
 
         return self._remove_link_1way(
             startpoint=startpoint, endpoint=endpoint, close_only=close_only
@@ -1056,7 +1058,8 @@ class Ecosystem:
             bool: Description
         """
         if twoway:
-            self._reopen_link_1way(startpoint=endpoint, endpoint=startpoint)
+            return self._reopen_link_1way(startpoint=endpoint, endpoint=startpoint)
+
         return self._reopen_link_1way(startpoint=startpoint, endpoint=endpoint)
 
     @check_args_type
