@@ -1035,7 +1035,9 @@ class Ecosystem:
             bool: Description
         """
         if twoway:
-            self._remove_link_1way(startpoint=endpoint, endpoint=startpoint, close_only=close_only)
+            return self._remove_link_1way(
+                startpoint=endpoint, endpoint=startpoint, close_only=close_only
+            )
 
         return self._remove_link_1way(
             startpoint=startpoint, endpoint=endpoint, close_only=close_only
@@ -1056,7 +1058,8 @@ class Ecosystem:
             bool: Description
         """
         if twoway:
-            self._reopen_link_1way(startpoint=endpoint, endpoint=startpoint)
+            return self._reopen_link_1way(startpoint=endpoint, endpoint=startpoint)
+
         return self._reopen_link_1way(startpoint=startpoint, endpoint=endpoint)
 
     @check_args_type
@@ -1305,9 +1308,13 @@ class Ecosystem:
             Debug (bool, optional): Description
         """
         if twoway:
-            self._change_location_1way(location_name, mode="reopen", direction="both", Debug=Debug)
+            return self._change_location_1way(
+                location_name, mode="reopen", direction="both", Debug=Debug
+            )
         else:
-            self._change_location_1way(location_name, mode="reopen", direction="in", Debug=Debug)
+            return self._change_location_1way(
+                location_name, mode="reopen", direction="in", Debug=Debug
+            )
 
     @check_args_type
     def add_conflict_zone(self, name: str, change_movechance: bool = True) -> None:
