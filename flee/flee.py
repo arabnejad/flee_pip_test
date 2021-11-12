@@ -1551,7 +1551,7 @@ class Ecosystem:
                     location.print()
                     assert location.pop > 1
 
-        self.agents.append(Person(location))
+        self.agents.append(Person(location=location))
 
     @check_args_type
     def insertAgent(self, location) -> None:
@@ -1561,7 +1561,7 @@ class Ecosystem:
         Args:
             location (Location): Description
         """
-        self.agents.append(Person(location))
+        self.agents.append(Person(location=location))
 
     @check_args_type
     def insertAgents(self, location, number: int) -> None:
@@ -1648,14 +1648,18 @@ class Ecosystem:
 
         self.locations[endpoint1_index].links.append(
             Link(
-                self.locations[endpoint1_index],
-                self.locations[endpoint2_index],
-                distance,
-                forced_redirection,
+                startpoint=self.locations[endpoint1_index],
+                endpoint=self.locations[endpoint2_index],
+                distance=distance,
+                forced_redirection=forced_redirection,
             )
         )
         self.locations[endpoint2_index].links.append(
-            Link(self.locations[endpoint2_index], self.locations[endpoint1_index], distance)
+            Link(
+                startpoint=self.locations[endpoint2_index],
+                endpoint=self.locations[endpoint1_index],
+                distance=distance
+            )
         )
 
     @check_args_type

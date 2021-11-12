@@ -460,7 +460,7 @@ class DataTable:
             if self.header[i] == name:
                 return i
 
-        print(self.header)
+        print(self.header, file=sys.stderr)
         sys.exit("Error: can't find the header %s in the header list" % (name))
 
     @check_args_type
