@@ -17,50 +17,50 @@ logger = logging.getLogger(__name__)
 
 
 def test_mali(run_py):
-    ret = run_py("mali", "10")
+    ret = run_py("mali", "50")
     assert ret == "OK"
 
 
 def test_par_mali(run_par):
     logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.setLevel(logging.DEBUG)
-    ret = run_par("mali", "10", "2")
+    ret = run_par("mali", "50", "2")
     assert ret == "OK"
 
 
 def test_burundi(run_py):
-    ret = run_py("burundi", "10")
+    ret = run_py("burundi", "50")
     assert ret == "OK"
 
 
 def test_par_burundi(run_par):
     logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.setLevel(logging.DEBUG)
-    ret = run_par("burundi", "10", "2")
+    ret = run_par("burundi", "50", "2")
     assert ret == "OK"
 
 
 def test_car(run_py):
-    ret = run_py("car", "10")
+    ret = run_py("car", "50")
     assert ret == "OK"
 
 
 def test_par_car(run_par):
     logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.setLevel(logging.DEBUG)
-    ret = run_par("car", "10", "2")
+    ret = run_par("car", "50", "2")
     assert ret == "OK"
 
 
 def test_ssudan(run_py):
-    ret = run_py("ssudan", "10")
+    ret = run_py("ssudan", "50")
     assert ret == "OK"
 
 
 def test_par_ssudan(run_par):
     logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.setLevel(logging.DEBUG)
-    ret = run_par("ssudan", "10", "2")
+    ret = run_par("ssudan", "50", "2")
     assert ret == "OK"
 
 
