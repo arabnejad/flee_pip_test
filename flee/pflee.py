@@ -438,7 +438,7 @@ class Ecosystem(flee.Ecosystem):
                     assert location.pop > 1
         self.total_agents += 1
         if self.total_agents % self.mpi.size == self.mpi.rank:
-            self.agents.append(Person(self, location))
+            self.agents.append(Person(self, location=location))
 
     @check_args_type
     def insertAgent(self, location) -> None:
@@ -450,7 +450,7 @@ class Ecosystem(flee.Ecosystem):
         """
         self.total_agents += 1
         if self.total_agents % self.mpi.size == self.mpi.rank:
-            self.agents.append(Person(self, location))
+            self.agents.append(Person(self, location=location))
 
     @check_args_type
     def insertAgents(self, location, number: int) -> None:
@@ -753,7 +753,7 @@ class Ecosystem(flee.Ecosystem):
                     )
                     cl[i].print()
                     assert cl[i].pop > 1
-            self.agents.append(Person(self, cl[i]))
+            self.agents.append(Person(self, location=cl[i]))
 
 
 if __name__ == "__main__":
