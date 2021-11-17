@@ -31,7 +31,7 @@ jobs:
           install-mpi: brew install mpich tree
         - os: macos-11
           mpi: openmpi
-          install-mpi: brew install openmpi tree
+          install-mpi: brew install openmpi --build-from-source
 
     steps:
       - name: Checkout  🛎️
