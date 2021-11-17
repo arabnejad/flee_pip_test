@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:        
         # os: [ "ubuntu-18.04", "macos-11" ]
-        os: [ "ubuntu-18.04"]
+        os: [ "ubuntu-latest"]
         python-version: ["3.7", "3.8", "3.9" ]
         mpi: [mpich, openmpi]
         include:
@@ -27,12 +27,12 @@ jobs:
         - os: ubuntu-18.04
           mpi: openmpi
           install-mpi: sudo apt install -y openmpi-bin libopenmpi-dev tree
-        - os: macos-11
-          mpi: mpich
-          install-mpi: brew install mpich tree
-        - os: macos-11
-          mpi: openmpi
-          install-mpi: brew install open-mpi tree
+        # - os: macos-11
+        #   mpi: mpich
+        #   install-mpi: brew install mpich tree
+        # - os: macos-11
+        #   mpi: openmpi
+        #   install-mpi: brew install open-mpi tree
 
     steps:
       - name: Checkout  🛎️
