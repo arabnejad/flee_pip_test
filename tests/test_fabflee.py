@@ -125,7 +125,7 @@ def run_par():
         config_path = os.path.join(base, config)
 
         cmd = [
-            "mpirun",
+            "mpiexec",
             "-n",
             cores,
             "python3",
