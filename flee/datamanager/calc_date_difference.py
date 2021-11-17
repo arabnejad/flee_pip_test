@@ -12,4 +12,4 @@ Usage python3 calc_date_difference.py <YYYY-MM-DD earlier date> <YYYY-MM-DD late
 
 
 if __name__ == "__main__":
-    print(DataTable.subtract_dates(sys.argv[2], sys.argv[1]))
+    print(DataTable.subtract_dates(date1=sys.argv[2], date2=sys.argv[1]))

@@ -1,6 +1,8 @@
 import csv
 import sys
 
+# pylint: skip-file
+
 
 class SimulationSettings:
     """

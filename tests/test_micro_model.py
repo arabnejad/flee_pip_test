@@ -1,7 +1,4 @@
-import flee.pmicro_flee as flee
-from flee.datamanager import handle_refugee_data
-import numpy as np
-import flee.postprocessing.analysis as a
+from flee import pmicro_flee as flee
 
 """
 Generation 1 code. Incorporates only distance, travel always takes one day.
@@ -15,7 +12,7 @@ def test_micro_model():
     flee.SimulationSettings.MaxWalkSpeed = 3.5
     flee.SimulationSettings.MaxCrossingSpeed = 2.0
 
-    end_time = 10
+    end_time = 30
     e = flee.Ecosystem()
 
     l1 = e.addLocation(name="A", movechance=0.3)
@@ -33,7 +30,7 @@ def test_micro_model():
     new_refs = 10
 
     # Insert refugee agents
-    for i in range(0, new_refs):
+    for _ in range(0, new_refs):
         e.addAgent(location=l1)
 
     for t in range(0, end_time):
@@ -43,10 +40,16 @@ def test_micro_model():
 
         print("Our agents are at", e.agents[0].location.name)
 
-        print(t, l1.numAgents + l2.numAgents + l3.numAgents + l4.numAgents,
-              l1.numAgents, l2.numAgents, l3.numAgents, l4.numAgents)
+        print(
+            t,
+            l1.numAgents + l2.numAgents + l3.numAgents + l4.numAgents,
+            l1.numAgents,
+            l2.numAgents,
+            l3.numAgents,
+            l4.numAgents,
+        )
 
-    assert t == 9
+    assert t == end_time - 1
     assert l1.numAgents + l2.numAgents + l3.numAgents + l4.numAgents == 10
 
     print("Test successful!")

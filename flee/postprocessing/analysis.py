@@ -21,12 +21,12 @@ ROUND_NDIGITS = 4
 
 
 @check_args_type
-def rel_error(val: int, correct_val: Union[float, int]) -> float:
+def rel_error(val: Union[int, np.int32], correct_val: Union[float, int]) -> float:
     """
     Summary
 
     Args:
-        val (int): Description
+        val (np.int32): Description
         correct_val (Union[float, int]): Description
 
     Returns:
@@ -38,12 +38,12 @@ def rel_error(val: int, correct_val: Union[float, int]) -> float:
 
 
 @check_args_type
-def abs_error(val: int, correct_val: Union[float, int]) -> float:
+def abs_error(val: Union[int, np.int32], correct_val: Union[float, int]) -> float:
     """
     Summary
 
     Args:
-        val (int): Description
+        val (np.int32): Description
         correct_val (Union[float, int]): Description
 
     Returns:

@@ -94,7 +94,7 @@ def _processEntry(
 
     # Make sure the date column becomes an integer, which contains the offset
     # in days relative to the start date.
-    row[date_column] = subtract_dates(row[date_column], start_date)
+    row[date_column] = subtract_dates(date1=row[date_column], date2=start_date)
 
     if data_type == "int":
         table = np.vstack(
@@ -188,23 +188,23 @@ def ConvertCsvFileToNumPyTable(
         if len(row) > 1:
             if len(row[0]) > 0 and row[0] not in ["DateTime", "Date"]:
                 table = _processEntry(
-                    row,
-                    table,
-                    data_type,
-                    date_column,
-                    count_column,
-                    start_date,
+                    row=row,
+                    table=table,
+                    data_type=data_type,
+                    date_column=date_column,
+                    count_column=count_column,
+                    start_date=start_date,
                     population_scaledown_factor=population_scaledown_factor,
                 )
 
         for row in values:
             table = _processEntry(
-                row,
-                table,
-                data_type,
-                date_column,
-                count_column,
-                start_date,
+                row=row,
+                table=table,
+                data_type=data_type,
+                date_column=date_column,
+                count_column=count_column,
+                start_date=start_date,
                 population_scaledown_factor=population_scaledown_factor,
             )
 
@@ -253,16 +253,16 @@ class DataTable:
 
                         # print("%s/%s" % (data_directory, row[1]))
                         csv_total = ConvertCsvFileToNumPyTable(
-                            "%s/%s" % (data_directory, row[1]),
+                            csv_name=os.path.join(data_directory, row[1]),
                             start_date=start_date,
                             population_scaledown_factor=population_scaledown_factor,
                         )
 
                         for added_csv in row[2:]:
                             csv_total = AddCSVTables(
-                                csv_total,
-                                ConvertCsvFileToNumPyTable(
-                                    "%s/%s" % (data_directory, added_csv),
+                                table1=csv_total,
+                                table2=ConvertCsvFileToNumPyTable(
+                                    csv_name=os.path.join(data_directory, added_csv),
                                     start_date=start_date,
                                     population_scaledown_factor=population_scaledown_factor,
                                 ),
@@ -287,7 +287,7 @@ class DataTable:
         self.header.append("total (modified input)")
         self.data_table.append(
             ConvertCsvFileToNumPyTable(
-                "%s" % (data_file_name),
+                csv_name=data_file_name,
                 start_date=self.start_date,
                 population_scaledown_factor=self.population_scaledown_factor,
             )
@@ -338,10 +338,14 @@ class DataTable:
             new_refugees = 0
             if SumFromCamps:
                 for i in self.header[1:]:
-                    new_refugees += self.get_field(i, 0, FullInterpolation)
+                    new_refugees += self.get_field(
+                        name=i, day=0, FullInterpolation=FullInterpolation
+                    )
                     # print("Day 0 data:",i,self.get_field(i, 0, FullInterpolation))
             else:
-                new_refugees += self.get_field("total", 0, FullInterpolation)
+                new_refugees += self.get_field(
+                    name="total", day=0, FullInterpolation=FullInterpolation
+                )
 
             # return int(new_refugees)
 
@@ -350,13 +354,13 @@ class DataTable:
             new_refugees = 0
             if SumFromCamps:
                 for i in self.header[1:]:
-                    new_refugees += self.get_field(i, day, FullInterpolation) - self.get_field(
-                        i, day - 1, FullInterpolation
-                    )
+                    new_refugees += self.get_field(
+                        name=i, day=day, FullInterpolation=FullInterpolation
+                    ) - self.get_field(i, day - 1, FullInterpolation)
             else:
-                new_refugees += self.get_field("total", day, FullInterpolation) - self.get_field(
-                    "total", day - 1, FullInterpolation
-                )
+                new_refugees += self.get_field(
+                    name="total", day=day, FullInterpolation=FullInterpolation
+                ) - self.get_field("total", day - 1, FullInterpolation)
 
             # return int(new_refugees)
 
@@ -373,7 +377,7 @@ class DataTable:
         """
         print("Agent count data table DUMP:")
         for i in range(0, length):
-            print(self.get_daily_difference(day + i))
+            print(self.get_daily_difference(day=day + i))
 
     @check_args_type
     def get_interpolated_data(self, column: int, day: int) -> int:
@@ -476,17 +480,13 @@ class DataTable:
         Returns:
             int: Description
         """
-        i = self._find_headerindex(name)
+        i = self._find_headerindex(name=name)
 
-        # if FullInterpolation:
-        #     # print(name, i, day, self.get_interpolated_data(i, day))
-        #     return self.get_interpolated_data(i, day)
-        # else:
-        #     return self.get_raw_data(i, day)
+        if FullInterpolation:
+            # print(name, i, day, self.get_interpolated_data(column=i, day))
+            return self.get_interpolated_data(column=i, day=day)
 
-        return (
-            self.get_interpolated_data(i, day) if FullInterpolation else self.get_raw_data(i, day)
-        )
+        return self.get_raw_data(column=i, day=day)
 
     @check_args_type
     def print_data_values_for_location(self, name: str, last_day: int) -> None:
@@ -498,7 +498,7 @@ class DataTable:
             last_day (int): Description
         """
         for i in range(0, last_day):
-            print(i, self.get_field(name, i))
+            print(i, self.get_field(name=name, day=i))
 
     @check_args_type
     def is_interpolated(self, name: str, day: int) -> bool:

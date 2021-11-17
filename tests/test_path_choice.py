@@ -1,7 +1,4 @@
 from flee import flee
-from flee.datamanager import handle_refugee_data
-import numpy as np
-import flee.postprocessing.analysis as a
 
 """
 Generation 1 code. Incorporates only distance, travel always takes one day.
@@ -18,12 +15,18 @@ def test_path_choice():
     e = flee.Ecosystem()
 
     l1 = e.addLocation(name="A", movechance=1.0)
-    l2 = e.addLocation(name="B", movechance=1.0)
-    l3 = e.addLocation(name="C1", movechance=1.0)
-    l4 = e.addLocation(name="C2", movechance=1.0)
-    l5 = e.addLocation(name="D1", movechance=1.0)
-    l6 = e.addLocation(name="D2", movechance=1.0)
-    l7 = e.addLocation(name="D3", movechance=1.0)
+    _ = e.addLocation(name="B", movechance=1.0)
+    _ = e.addLocation(name="C1", movechance=1.0)
+    _ = e.addLocation(name="C2", movechance=1.0)
+    _ = e.addLocation(name="D1", movechance=1.0)
+    _ = e.addLocation(name="D2", movechance=1.0)
+    _ = e.addLocation(name="D3", movechance=1.0)
+    # l2 = e.addLocation(name="B", movechance=1.0)
+    # l3 = e.addLocation(name="C1", movechance=1.0)
+    # l4 = e.addLocation(name="C2", movechance=1.0)
+    # l5 = e.addLocation(name="D1", movechance=1.0)
+    # l6 = e.addLocation(name="D2", movechance=1.0)
+    # l7 = e.addLocation(name="D3", movechance=1.0)
 
     e.linkUp(endpoint1="A", endpoint2="B", distance=10.0)
     e.linkUp(endpoint1="A", endpoint2="C1", distance=10.0)

@@ -1,8 +1,4 @@
 from flee import flee
-from flee.datamanager import handle_refugee_data
-import numpy as np
-import flee.postprocessing.analysis as a
-import sys
 
 """
 Generation 1 code. Incorporates only distance, travel always takes one day.
@@ -16,21 +12,22 @@ def test_awareness():
     flee.SimulationSettings.MaxMoveSpeed = 5000.0
     flee.SimulationSettings.MaxWalkSpeed = 5000.0
 
-    '''
-    if(len(sys.argv) > 1):
-        flee.SimulationSettings.AwarenessLevel = int(sys.argv[1])
-    '''
-
-    end_time = 10
+    # end_time = 10
     e = flee.Ecosystem()
 
     l1 = e.addLocation(name="A", movechance=0.3)
-    l2 = e.addLocation(name="B", movechance=0.3)
-    l3 = e.addLocation(name="C", movechance=0.3)
-    l4 = e.addLocation(name="D", movechance=0.3)
-    l5 = e.addLocation(name="C2", movechance=0.3)
-    l6 = e.addLocation(name="D2", movechance=0.3)
-    l7 = e.addLocation(name="D3", location_type="camp")
+    _ = e.addLocation(name="B", movechance=0.3)
+    _ = e.addLocation(name="C", movechance=0.3)
+    _ = e.addLocation(name="D", movechance=0.3)
+    _ = e.addLocation(name="C2", movechance=0.3)
+    _ = e.addLocation(name="D2", movechance=0.3)
+    _ = e.addLocation(name="D3", location_type="camp")
+    # l2 = e.addLocation(name="B", movechance=0.3)
+    # l3 = e.addLocation(name="C", movechance=0.3)
+    # l4 = e.addLocation(name="D", movechance=0.3)
+    # l5 = e.addLocation(name="C2", movechance=0.3)
+    # l6 = e.addLocation(name="D2", movechance=0.3)
+    # l7 = e.addLocation(name="D3", location_type="camp")
 
     e.linkUp(endpoint1="A", endpoint2="B", distance=834.0)
     e.linkUp(endpoint1="A", endpoint2="C", distance=834.0)

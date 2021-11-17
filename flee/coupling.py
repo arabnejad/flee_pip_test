@@ -118,7 +118,7 @@ class CouplingInterface:
         """
         if location.name not in self.location_names:
 
-            self.location_ids += [self.e._convert_location_name_to_index(location.name)]
+            self.location_ids += [self.e._convert_location_name_to_index(name=location.name)]
             self.location_names += [location.name]
             """
             disabled by HAMID
@@ -160,7 +160,9 @@ class CouplingInterface:
                     if len(loc.links) == 0:
                         if loc.name not in self.location_names:
                             print("Adding ghost location {}".format(loc.name), file=sys.stderr)
-                            self.addCoupledLocation(loc, loc.name, "out", interval=1)
+                            self.addCoupledLocation(
+                                location=loc, name=loc.name, direction="out", interval=1
+                            )
 
     def addMicroConflictLocations(self, ig) -> None:
         """

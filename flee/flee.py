@@ -88,9 +88,9 @@ class Person:
             if outcome < movechance:
                 # determine here which route to take?
                 if SimulationSettings.UseV1Rules:
-                    chosenRoute = self.selectRouteRuleset1(time)
+                    chosenRoute = self.selectRouteRuleset1(time=time)
                 else:
-                    chosenRoute = self.selectRouteRuleset2(time)
+                    chosenRoute = self.selectRouteRuleset2(time=time)
 
                 # if there is a viable route to a different location.
                 if chosenRoute >= 0:
@@ -933,7 +933,7 @@ class Ecosystem:
             bool: Description
         """
         new_links = []
-        x = self._convert_location_name_to_index(startpoint)
+        x = self._convert_location_name_to_index(name=startpoint)
         removed = False
 
         for i in range(0, len(self.locations[x].links)):
@@ -979,7 +979,7 @@ class Ecosystem:
             bool: Description
         """
         new_closed_links = []
-        x = self._convert_location_name_to_index(startpoint)
+        x = self._convert_location_name_to_index(name=startpoint)
         reopened = False
         # print("Reopening link from {} to {}, "
         #       "closed link list length = {}.".format(
@@ -1253,9 +1253,13 @@ class Ecosystem:
             twoway (bool, optional): Description
             Debug (bool, optional): Description
         """
-        self._change_border_1way(source_country, dest_country, mode="close", Debug=Debug)
+        self._change_border_1way(
+            source_country=source_country, dest_country=dest_country, mode="close", Debug=Debug
+        )
         if twoway:
-            self._change_border_1way(dest_country, source_country, mode="close", Debug=Debug)
+            self._change_border_1way(
+                source_country=dest_country, dest_country=source_country, mode="close", Debug=Debug
+            )
 
     @check_args_type
     def reopen_border(
@@ -1271,9 +1275,13 @@ class Ecosystem:
             twoway (bool, optional): Description
             Debug (bool, optional): Description
         """
-        self._change_border_1way(source_country, dest_country, mode="reopen", Debug=Debug)
+        self._change_border_1way(
+            source_country=source_country, dest_country=dest_country, mode="reopen", Debug=Debug
+        )
         if twoway:
-            self._change_border_1way(dest_country, source_country, mode="reopen", Debug=Debug)
+            self._change_border_1way(
+                source_country=dest_country, dest_country=source_country, mode="reopen", Debug=Debug
+            )
 
     @check_args_type
     def close_location(self, location_name: str, twoway: bool = True, Debug: bool = False) -> bool:
@@ -1311,10 +1319,8 @@ class Ecosystem:
             return self._change_location_1way(
                 location_name, mode="reopen", direction="both", Debug=Debug
             )
-        else:
-            return self._change_location_1way(
-                location_name, mode="reopen", direction="in", Debug=Debug
-            )
+
+        return self._change_location_1way(location_name, mode="reopen", direction="in", Debug=Debug)
 
     @check_args_type
     def add_conflict_zone(self, name: str, change_movechance: bool = True) -> None:
@@ -1426,7 +1432,7 @@ class Ecosystem:
         """
         Add a group of agents, distributed across conflict zones.
         """
-        cl = self.pick_conflict_locations(number)
+        cl = self.pick_conflict_locations(number=number)
         for i in range(0, number):
             self.addAgent(location=cl[i])
 
@@ -1658,7 +1664,7 @@ class Ecosystem:
             Link(
                 startpoint=self.locations[endpoint2_index],
                 endpoint=self.locations[endpoint1_index],
-                distance=distance
+                distance=distance,
             )
         )
 

@@ -55,15 +55,15 @@ class RefugeeTable(DataTable.DataTable):
                 l1reader = csv.reader(csvfile, delimiter=",")
                 for row in l1reader:
                     if len(row) > 1:
-                        self.correctLevel1Registrations(row[0], row[1])
+                        self.correctLevel1Registrations(name=row[0], date=row[1])
 
     @check_args_type
     def correctLevel1Registrations(self, name: str, date: str) -> float:
         """
         Corrects for level 1 registration overestimations. Returns the scaling factor
         """
-        hindex = self._find_headerindex(name)
-        days = DataTable.subtract_dates(date, self.start_date)
+        hindex = self._find_headerindex(name=name)
+        days = DataTable.subtract_dates(date1=date, date2=self.start_date)
         ref_table = self.data_table[hindex]
 
         for i in range(0, len(ref_table)):
@@ -91,7 +91,7 @@ class RefugeeTable(DataTable.DataTable):
         Returns:
             int: Description
         """
-        hindex = self._find_headerindex(name)
+        hindex = self._find_headerindex(name=name)
         ref_table = self.data_table[hindex]
         max_val = 0
 

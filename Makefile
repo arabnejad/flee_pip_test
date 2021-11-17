@@ -60,26 +60,27 @@ lint/flake8: ## check style with flake8
 	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi
 	@if [ -d ".linter_reports/flake-report" ]; then rm -rf .linter_reports/flake-report; fi
 	$(info ************  RUNNING flake8 ************)
-	flake8 --config=.linter_cfg/.flake8 flee || exit 0
+	flake8 --config=.linter_cfg/.flake8 flee/ multiscale/ tests/ || exit 0
 
 
 lint/isort: ## check import module style with isort
 	$(info ************  RUNNING isort ************)		
-	isort --settings-path=.linter_cfg/.isort.cfg --profile hug --check --diff --filter-files flee/ || exit 0
+	isort --settings-path=.linter_cfg/.isort.cfg --profile hug --check --diff --filter-files flee/ multiscale/ tests/ 2>&1 | tee .linter_reports/isort_report.txt || exit 0
 
 
 lint/pylint: ## check code-style with pylint
 	$(info ************  RUNNING pylint ************)	
-	pylint --rcfile=.linter_cfg/.pylintrc --output-format=json:somefile,colorized flee/ || exit 0
+	pylint --rcfile=.linter_cfg/.pylintrc --output-format=json:somefile,colorized flee/ multiscale/run_mscale.py tests/  2>&1 | tee .linter_reports/pylint_report.txt || exit 0
+
 
 
 lint/black: ## check style with black
 	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi
 	$(info ************  RUNNING black ************)	
-	black  --config=.linter_cfg/.black flee/ > .linter_reports/black_report.ansi  || exit 0
+	black  --config=.linter_cfg/.black flee/ multiscale/ tests/ > .linter_reports/black_report.ansi  || exit 0
 
 
-lint: lint/flake8 lint/black lint/isort lint/black ## check all lint styles
+lint: lint/flake8 lint/black lint/isort lint/black lint/pylint ## check all lint styles
 
 
 test: ## run pytests quickly with the default Python

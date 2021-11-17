@@ -76,4 +76,4 @@ def compare(out_dir_1: str, out_dir_2: str) -> None:
 if __name__ == "__main__":
     out_dir_1 = sys.argv[1]
     out_dir_2 = sys.argv[2]
-    compare(out_dir_1, out_dir_2)
+    compare(out_dir_1=out_dir_1, out_dir_2=out_dir_2)

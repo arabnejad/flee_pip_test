@@ -14,6 +14,8 @@ notes=FIXME,
       XXX,
       TODO
 
+# to avid False positives on pandas.io.parsers.TextFileReader
+generated-members=pandas.*
 
 [MESSAGES CONTROL]
 
@@ -59,4 +61,5 @@ disable=invalid-name,
 	consider-using-enumerate,
 	arguments-differ,
 	consider-using-with,
-	wrong-import-order
+	wrong-import-order,
+	missing-function-docstring

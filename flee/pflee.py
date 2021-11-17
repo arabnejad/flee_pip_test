@@ -739,7 +739,7 @@ class Ecosystem(flee.Ecosystem):
             number_on_rank += 1
 
         self.total_agents += number
-        cl = self.pick_conflict_locations(number_on_rank)
+        cl = self.pick_conflict_locations(number=number_on_rank)
         for i in range(0, number_on_rank):
             if SimulationSettings.TakeRefugeesFromPopulation:
                 if cl[i].pop > 1:

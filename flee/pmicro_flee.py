@@ -6,7 +6,7 @@ from functools import wraps
 from typing import Optional, Tuple
 
 from flee import pflee
-from flee.SimulationSettings import SimulationSettings  # noqa: F401
+from flee.SimulationSettings import SimulationSettings  # noqa, pylint: disable=W0611
 
 if os.getenv("FLEE_TYPE_CHECK") is not None and os.environ["FLEE_TYPE_CHECK"].lower() == "true":
     from beartype import beartype as check_args_type

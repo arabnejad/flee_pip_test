@@ -31,14 +31,14 @@ else:
 
 @check_args_type
 def compare_numagents_camp(
-    out_dir: str, datas: pd.DataFrame, name: str, legend_loc: int = 4
+    out_dir: str, data_frame: pd.DataFrame, name: str, legend_loc: int = 4
 ) -> None:
     """
     Advanced plotting function for validation of refugee registration numbers in camps.
 
     Args:
         out_dir (str): Description
-        datas (List["DataFrame"]): Description
+        data (List["DataFrame"]): Description
         name (str): Description
         legend_loc (int, optional): Description
     """
@@ -47,7 +47,7 @@ def compare_numagents_camp(
     labelssim = []
 
     n = 0
-    for data in datas:
+    for data in data_frame:
         y1 = data["%s sim" % name].as_matrix()
         # y2 = data["%s data" % name].as_matrix()
         days = np.arange(len(y1))
@@ -73,7 +73,7 @@ def compare_numagents_camp(
     labelssim = []
 
     n = 0
-    for data in datas:
+    for data in data_frame:
         y1 = data["%s sim" % name].as_matrix()
         days = np.arange(len(y1))
 
@@ -152,19 +152,21 @@ if __name__ == "__main__":
     nmodel = False
 
     # plot numagents compare by camp.
-    for i in location_names:
-        compare_numagents_camp(out_dir, refugee_data, i, legend_loc=4)
+    for loc_name in location_names:
+        compare_numagents_camp(
+            out_dir=out_dir, data_frame=refugee_data, name=loc_name, legend_loc=4
+        )
 
     for i in range(0, len(refugee_data)):
         loc_errors.append([])
-        for j in location_names:
+        for loc_name in location_names:
             loc_errors[i].append(
                 CalculateDiagnostics.calculate_errors(
-                    out_dir, refugee_data[i], j, naieve_model=nmodel
+                    out_dir=out_dir, data=refugee_data[i], name=loc_name, naieve_model=nmodel
                 )
             )
 
-        sim_errors.append(dd.SimulationErrors(loc_errors[i]))
+        sim_errors.append(dd.SimulationErrors(location_errors=loc_errors[i]))
 
     matplotlib.rcParams.update({"font.size": 20})
 

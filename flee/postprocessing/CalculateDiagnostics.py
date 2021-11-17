@@ -49,13 +49,17 @@ def calculate_errors(out_dir, data, name, naieve_model=True):
     lerr = dd.LocationErrors()
 
     # absolute difference
-    lerr.errors["absolute difference"] = a.abs_diffs(y1, y2)
+    lerr.errors["absolute difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2)
 
     # absolute difference (rescaled)
-    lerr.errors["absolute difference rescaled"] = a.abs_diffs(y1_rescaled, y2)
+    lerr.errors["absolute difference rescaled"] = a.abs_diffs(
+        forecast_vals=y1_rescaled, correct_vals=y2
+    )
 
     # ratio difference
-    lerr.errors["ratio difference"] = a.abs_diffs(y1, y2) / (np.maximum(untot, np.ones(len(untot))))
+    lerr.errors["ratio difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2) / (
+        np.maximum(untot, np.ones(len(untot)))
+    )
 
     """ Errors of which I'm usure whether to report:
    - accuracy ratio (forecast / true value), because it crashes if denominator is 0.
@@ -69,14 +73,44 @@ def calculate_errors(out_dir, data, name, naieve_model=True):
         lerr.errors["N"] = np.sum(y2)
 
         # flat naieve model (7 day)
-        lerr.errors["MASE7"] = a.calculate_MASE(y1_rescaled, y2, n1, naieve_early_day)
-        lerr.errors["MASE7-sloped"] = a.calculate_MASE(y1_rescaled, y2, n3, naieve_early_day)
-        lerr.errors["MASE7-ratio"] = a.calculate_MASE(y1_rescaled, y2, n5, naieve_early_day)
+        lerr.errors["MASE7"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n1,
+            start_of_forecast_period=naieve_early_day,
+        )
+        lerr.errors["MASE7-sloped"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n3,
+            start_of_forecast_period=naieve_early_day,
+        )
+        lerr.errors["MASE7-ratio"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n5,
+            start_of_forecast_period=naieve_early_day,
+        )
 
         # flat naieve model (30 day)
-        lerr.errors["MASE30"] = a.calculate_MASE(y1_rescaled, y2, n2, naieve_training_day)
-        lerr.errors["MASE30-sloped"] = a.calculate_MASE(y1_rescaled, y2, n4, naieve_training_day)
-        lerr.errors["MASE30-ratio"] = a.calculate_MASE(y1_rescaled, y2, n6, naieve_training_day)
+        lerr.errors["MASE30"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n2,
+            start_of_forecast_period=naieve_training_day,
+        )
+        lerr.errors["MASE30-sloped"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n4,
+            start_of_forecast_period=naieve_training_day,
+        )
+        lerr.errors["MASE30-ratio"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n6,
+            start_of_forecast_period=naieve_training_day,
+        )
 
         # Accuracy ratio doesn't work because of 0 values in the data.
         print(

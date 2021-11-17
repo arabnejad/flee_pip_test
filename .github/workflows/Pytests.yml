@@ -82,6 +82,7 @@ jobs:
           export TMPDIR=/tmp
           export OMPI_MCA_btl=self,tcp
           export OMPI_MCA_btl_vader_backing_directory=/tmp
+          export FLEE_TYPE_CHECK=true 
 
           cd FabFlee/config_files/mali
           tree .

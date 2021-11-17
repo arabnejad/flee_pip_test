@@ -3,7 +3,7 @@ import os
 import sys
 from functools import wraps
 
-from flee import flee
+# from flee import flee
 from flee.InputGeography import InputGeography as based_InputGeography_class
 from flee.SimulationSettings import SimulationSettings
 
@@ -68,6 +68,7 @@ class InputGeography(based_InputGeography_class):
                         ]
                     )
 
+        """
         if isinstance(row[link_type_col], str):
             if "drive" in row[link_type_col].lower():
                 flee.SimulationSettings.MaxMoveSpeed = flee.SimulationSettings.MaxMoveSpeed
@@ -81,6 +82,7 @@ class InputGeography(based_InputGeography_class):
                     " {} for location object with name.".format(link_type_col, name1_col)
                 )
                 sys.exit()
+        """
 
     @check_args_type
     def StoreInputGeographyInEcosystem(self, e):

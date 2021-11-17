@@ -4,7 +4,6 @@ from errno import EEXIST
 from functools import wraps
 from os import makedirs, path
 from os.path import basename, isfile, normpath
-from typing import Type
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -246,7 +245,7 @@ def plot_errors(data, config: str, output: str, model: str = "macro") -> None:
     for i in location_names:
         loc_errors.append(error_quantification(output, data, i, naieve_model=nmodel))
 
-    sim_errors = SimulationErrors(loc_errors)
+    sim_errors = SimulationErrors(location_errors=loc_errors)
 
     matplotlib.rcParams.update({"font.size": 20})
 
@@ -331,57 +330,18 @@ def error_quantification(config, data, name, naieve_model=True):
     lerr = LocationErrors()
 
     # absolute difference
-    lerr.errors["absolute difference"] = a.abs_diffs(y1, y2)
+    lerr.errors["absolute difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2)
 
     # absolute difference (rescaled)
-    lerr.errors["absolute difference rescaled"] = a.abs_diffs(y1_rescaled, y2)
+    lerr.errors["absolute difference rescaled"] = a.abs_diffs(
+        forecast_vals=y1_rescaled, correct_vals=y2
+    )
 
     # ratio difference
-    lerr.errors["ratio difference"] = a.abs_diffs(y1, y2) / (np.maximum(untot, np.ones(len(untot))))
+    lerr.errors["ratio difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2) / (
+        np.maximum(untot, np.ones(len(untot)))
+    )
 
-    """
-    # We can only calculate the Mean Absolute Scaled Error if we have a naieve
-    # model in our plot.
-    if naieve_model:
-
-        naieve_early_day = 7
-        naieve_training_day = 30
-
-        # Number of observations (aggrgate refugee days in UNHCR data set for
-        # this location)
-        lerr.errors["N"] = np.sum(y2)
-
-        # flat naieve model (7 day)
-        lerr.errors["MASE7"] = a.calculate_MASE(
-            y1_rescaled, y2, n1, naieve_early_day)
-        lerr.errors["MASE7-sloped"] = a.calculate_MASE(y1_rescaled,
-                                                       y2, n3,
-                                                       naieve_early_day)
-        lerr.errors["MASE7-ratio"] = a.calculate_MASE(y1_rescaled,
-                                                      y2, n5,
-                                                      naieve_early_day)
-
-        # flat naieve model (30 day)
-        lerr.errors["MASE30"] = a.calculate_MASE(
-            y1_rescaled, y2, n2, naieve_training_day)
-        lerr.errors["MASE30-sloped"] = a.calculate_MASE(y1_rescaled,
-                                                        y2, n4,
-                                                        naieve_training_day)
-        lerr.errors[
-            "MASE30-ratio"] = a.calculate_MASE(y1_rescaled,
-                                               y2, n6,
-                                               naieve_training_day)
-
-        print("%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
-            config, name, lerr.errors["MASE7"],
-            lerr.errors["MASE7-sloped"],
-            lerr.errors["MASE7-ratio"],
-            lerr.errors["MASE30"],
-            lerr.errors["MASE30-sloped"],
-            lerr.errors["MASE30-ratio"],
-            lerr.errors["N"])
-        )
-    """
     return lerr
 
 

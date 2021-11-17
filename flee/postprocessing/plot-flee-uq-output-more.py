@@ -131,11 +131,11 @@ def plotme_minimal(out_dir, data, name):
     data_x = []
     data_y = []
 
-    d = DataTable("mali2012/refugees.csv", csvformat="mali-portal")
+    d = DataTable(data_layout="mali2012/refugees.csv", csvformat="mali-portal")
 
     # Loop - taking the length of dataset for x and y rays
     for day in range(0, len(data["%s data" % name])):
-        if d.is_interpolated(name, day) is False:
+        if d.is_interpolated(name=name, day=day) is False:
             # draw a point
             data_x.append(day)
             data_y.append(data.at[day, "%s data" % name])
@@ -425,13 +425,17 @@ def plotme(
         untot = untot[:-offset]
 
     # absolute difference
-    lerr.errors["absolute difference"] = a.abs_diffs(y1, y2)
+    lerr.errors["absolute difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2)
 
     # absolute difference (rescaled)
-    lerr.errors["absolute difference rescaled"] = a.abs_diffs(y1_rescaled, y2)
+    lerr.errors["absolute difference rescaled"] = a.abs_diffs(
+        forecast_vals=y1_rescaled, correct_vals=y2
+    )
 
     # ratio difference
-    lerr.errors["ratio difference"] = a.abs_diffs(y1, y2) / (np.maximum(untot, np.ones(len(untot))))
+    lerr.errors["ratio difference"] = a.abs_diffs(forecast_vals=y1, correct_vals=y2) / (
+        np.maximum(untot, np.ones(len(untot)))
+    )
 
     """
     Errors of which I'm usure whether to report:
@@ -449,14 +453,44 @@ def plotme(
         lerr.errors["N"] = np.sum(y2)
 
         # flat naieve model (7 day)
-        lerr.errors["MASE7"] = a.calculate_MASE(y1_rescaled, y2, n1, naieve_early_day)
-        lerr.errors["MASE7-sloped"] = a.calculate_MASE(y1_rescaled, y2, n3, naieve_early_day)
-        lerr.errors["MASE7-ratio"] = a.calculate_MASE(y1_rescaled, y2, n5, naieve_early_day)
+        lerr.errors["MASE7"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n1,
+            start_of_forecast_period=naieve_early_day,
+        )
+        lerr.errors["MASE7-sloped"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n3,
+            start_of_forecast_period=naieve_early_day,
+        )
+        lerr.errors["MASE7-ratio"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n5,
+            start_of_forecast_period=naieve_early_day,
+        )
 
         # flat naieve model (30 day)
-        lerr.errors["MASE30"] = a.calculate_MASE(y1_rescaled, y2, n2, naieve_training_day)
-        lerr.errors["MASE30-sloped"] = a.calculate_MASE(y1_rescaled, y2, n4, naieve_training_day)
-        lerr.errors["MASE30-ratio"] = a.calculate_MASE(y1_rescaled, y2, n6, naieve_training_day)
+        lerr.errors["MASE30"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n2,
+            start_of_forecast_period=naieve_training_day,
+        )
+        lerr.errors["MASE30-sloped"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n4,
+            start_of_forecast_period=naieve_training_day,
+        )
+        lerr.errors["MASE30-ratio"] = a.calculate_MASE(
+            forecast_vals=y1_rescaled,
+            actual_vals=y2,
+            naieve_vals=n6,
+            start_of_forecast_period=naieve_training_day,
+        )
 
         # Accuracy ratio doesn't work because of 0 values in the data.
         # ln_accuracy_ratio = calculate_ln_accuracy_ratio(y1, y2)
@@ -662,19 +696,19 @@ if __name__ == "__main__":
         # loc_errors.append(plotme(out_dir, refugee_data, i, legend_loc=4,
         # naieve_model=True))
 
-    sim_errors = SimulationErrors(loc_errors)
+    sim_errors = SimulationErrors(location_errors=loc_errors)
 
     # print(sim_errors.abs_diff())
     if nmodel:
         print(
             "{} & {} & {} & {} & {} & {} & {}\\\\".format(
                 out_dir,
-                sim_errors.get_error("MASE7"),
-                sim_errors.get_error("MASE7-sloped"),
-                sim_errors.get_error("MASE7-ratio"),
-                sim_errors.get_error("MASE30"),
-                sim_errors.get_error("MASE30-sloped"),
-                sim_errors.get_error("MASE30-ratio"),
+                sim_errors.get_error(err_type="MASE7"),
+                sim_errors.get_error(err_type="MASE7-sloped"),
+                sim_errors.get_error(err_type="MASE7-ratio"),
+                sim_errors.get_error(err_type="MASE30"),
+                sim_errors.get_error(err_type="MASE30-sloped"),
+                sim_errors.get_error(err_type="MASE30-ratio"),
             )
         )
 
@@ -758,7 +792,7 @@ if __name__ == "__main__":
         for i in location_names:
             loc_errors.append(calculate_error(out_dir, refugee_data, i))
 
-        sim_errors = SimulationErrors(loc_errors)
+        sim_errors = SimulationErrors(location_errors=loc_errors)
         diffdata = sim_errors.abs_diff(rescaled=False) / np.maximum(un_refs, np.ones(len(un_refs)))
         diffdata_rescaled = sim_errors.abs_diff() / np.maximum(un_refs, np.ones(len(un_refs)))
 
