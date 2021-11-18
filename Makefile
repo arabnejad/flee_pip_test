@@ -64,13 +64,16 @@ lint/flake8: ## check style with flake8
 
 
 lint/isort: ## check import module style with isort
+	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi
 	$(info ************  RUNNING isort ************)		
 	isort --settings-path=.linter_cfg/.isort.cfg --profile hug --check --diff --filter-files flee/ multiscale/ tests/ 2>&1 | tee .linter_reports/isort_report.txt || exit 0
 
 
 lint/pylint: ## check code-style with pylint
+	@if [ ! -d ".linter_reports" ]; then mkdir .linter_reports; fi	
 	$(info ************  RUNNING pylint ************)	
 	pylint --rcfile=.linter_cfg/.pylintrc --output-format=json:somefile,colorized flee/ multiscale/run_mscale.py tests/  2>&1 | tee .linter_reports/pylint_report.txt || exit 0
+	@rm somefile
 
 
 
