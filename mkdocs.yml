@@ -15,7 +15,7 @@ site_author: Hamid Arabnejad
 docs_dir: docs/
 
 # Copyright
-copyright: Derek Groen (djgroen@gmail.com)
+copyright: Derek Groen
 
 ####################
 #   Social Media   #
@@ -53,22 +53,21 @@ theme:
   font:    
     text: Roboto
     code: Roboto Mono
-  palette:
-    # primary: blue grey
-    # accent: red
-    - scheme: default
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to dark mode
-      # primary: teal
-      # accent: red
-        
-    - scheme: slate 
-      toggle:
-        icon: material/weather-night
-        name: Switch to light mode     
-      # primary: teal
-      # accent: red
+  # palette:
+  #   # primary: blue grey
+  #   # accent: red
+  #   - scheme: default
+  #     toggle:
+  #       icon: material/weather-sunny
+  #       name: Switch to dark mode
+  #     # primary: teal
+  #     # accent: red        
+  #   - scheme: slate 
+  #     toggle:
+  #       icon: material/weather-night
+  #       name: Switch to light mode     
+  #     # primary: teal
+  #     # accent: red
 
   features:
     - search.suggest

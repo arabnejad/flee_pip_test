@@ -1,5 +1,5 @@
 
-# *Simulation toolkit for the movement of individuals*
+# **Simulation toolkit for the movement of individuals**
 
 Flee is an agent-based modelling toolkit which is purpose-built for simulating the movement of individuals across geographical locations, released under a BSD 3-clause license.
 
