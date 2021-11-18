@@ -5,8 +5,9 @@ name: Publish to PyPI 📦
 
 on:
   release:
-    types: [created]
-
+    # types: [created]
+    types:
+      - "published"
 
 jobs:
   pkg_deploy:
