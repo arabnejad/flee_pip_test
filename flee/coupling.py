@@ -629,7 +629,9 @@ class CouplingInterface:
             if "out" in self.directions[i]:
                 csv_header.append(self.names[i])
         days, LocationsNumAgents = self.readCSVLogFiles(
-            dirInputFiles=dirInputFiles, inputFileNames=in_fnames, columnHeader=csv_header
+            dirInputFiles=dirInputFiles,
+            inputFileNames=list(in_fnames.keys()),
+            columnHeader=csv_header
         )
 
         # plot data
@@ -693,7 +695,9 @@ class CouplingInterface:
 
         csv_header = ["total_agents"]
         days, TotalAgents = self.readCSVLogFiles(
-            dirInputFiles=dirInputFiles, inputFileNames=in_fnames, columnHeader=csv_header
+            dirInputFiles=dirInputFiles,
+            inputFileNames=list(in_fnames.keys()),
+            columnHeader=csv_header
         )
 
         # plotting preparation
@@ -734,7 +738,9 @@ class CouplingInterface:
 
         csv_header = ["new_refs"]
         days, NewRefugees = self.readCSVLogFiles(
-            dirInputFiles=dirInputFiles, inputFileNames=in_fnames, columnHeader=csv_header
+            dirInputFiles=dirInputFiles,
+            inputFileNames=list(in_fnames.keys()),
+            columnHeader=csv_header
         )
 
         # plotting preparation
@@ -761,7 +767,7 @@ class CouplingInterface:
     @check_args_type
     def readCSVLogFiles(
         self, dirInputFiles: str, inputFileNames: List[str], columnHeader: List[str]
-    ) -> Tuple[list, dict]:
+    ) -> Tuple[np.ndarray, dict]:
         """
         Summary
 
@@ -771,10 +777,10 @@ class CouplingInterface:
             columnHeader (List[str]): Description
 
         No Longer Returned:
-            Tuple[list, dict]: Description
+            Tuple[np.ndarray, dict]: Description
         """
         dict_res = {}
-        days = []
+        days = np.array([])
         for name in columnHeader:
             dict_res[name] = []
 
